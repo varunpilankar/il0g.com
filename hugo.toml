@@ -1,4 +1,4 @@
-baseURL = "https://il0g.com"
+baseURL = "/"
 languageCode = "en-us"
 title = "il0g.com"
 theme = "hugo-theme-console"

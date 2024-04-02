@@ -1,7 +1,6 @@
 +++
 title = 'Sharing With Hugo'
-date = 2024-04-03T03:15:08+05:30
-draft = true
+date = "2024-04-03T03:15:08+05:30"
 +++
 
 # Start sharing with Hugo, Git and Cloudflare

@@ -49,26 +49,26 @@ Considering you haven't installed Xcode and Homebrew while also assuming you are
 1.  Open the Terminal or iTerm application on your Mac. Use Spotlight to have a quick access to launch it.
 2. **Install Xcode Command Line Tools** 
 	1. Run the following command to install Xcode Command Line Tolls on your Mac device.
-	2. ` xcode-select --install `
+	2. ``` xcode-select --install ```
 	3. **Note** - This might take quite sometime, so its recommended to grab your favourite beverage or a coffee until this is over 
 3. Once done, its time to install Homebrew using step 1 of this guide i.e. Terminal or iTerm
 4. Copy and Paste the following command to install Homebrew.
-5. ` /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" `
+5. ``` /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ```
 6. Hit return and let installation complete.
 
 Congratulation you have successfully installed both Xcode Command Line Tools (from Apple) and HomeBrew onto your MacOS.
 
 Again open your Terminal or iTerm and Copy-Paste the following command to install git 
 
-` brew install git `
+``` brew install git ``` 
 
 Then you can install Go Lang using homebrew by using this command
 
-` brew install golang `
+``` brew install golang ``` 
 
 Once the installation is complete, you can check the Go Lang Version by typing in
 
-` go version `
+``` go version ``` 
 
 If you have reach until here with no problem or errors. You have won half of your battle through.
 
@@ -77,7 +77,7 @@ If you have reach until here with no problem or errors. You have won half of you
 
 Using Homebrew your can now easily install Hugo by using terminal package manager
 
-` brew install hugo `
+``` brew install hugo ``` 
 
 
 > Note 

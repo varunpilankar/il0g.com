@@ -24,13 +24,6 @@ sectionPagesMenu = "main"
   disqusShortname = "il0g"
 
 
-[permalinks]
-  [permalinks.page]
-    posts = '/'
-  [permalinks.section]
-    posts = '/'
-
-
   [[params.navlinks]]
   name = "posts/"
   url = "posts/"

@@ -7,7 +7,11 @@ date = "2024-04-03T03:15:08+05:30"
 
 ## Introduction
 
-Thank you opening my link to read through, weather you call this a post, blog, static website or hugo. the main purpose of writing this down and sharing openly online is in focus to unlearn and learn new things. And i thought improving my writing habits would be a great skill to sharpen this year as a goal. So this where i am embarrassing myself publicly online to get some feedback on how to improve this place and continue my journey as a habit to share online as much i could. Let me highlight the key points which you might come across over the course of time on this website whether i share a movie, book, music or tech review. all will be share from my personal experience and voice which will not be taken as a biased or personally as i will be sharing it as saw as possible without any editorial filter. So please don't be offended by any of it.
+Thank you opening my link to read through, weather you call this a post, blog, static website or hugo. the main purpose of writing this down and sharing openly online is in focus to unlearn and learn new things. And i thought improving my writing habits would be a great skill to sharpen this year as a goal. 
+
+<!--more-->
+
+So this where i am embarrassing myself publicly online to get some feedback on how to improve this place and continue my journey as a habit to share online as much i could. Let me highlight the key points which you might come across over the course of time on this website whether i share a movie, book, music or tech review. all will be share from my personal experience and voice which will not be taken as a biased or personally as i will be sharing it as saw as possible without any editorial filter. So please don't be offended by any of it.
 
 ## Dumping Knowledge for yourself
 Over the course of last 7 years of my entrepreneurial journey i have learn a key lesson. Before that i would like to set some bases to it so the read is much enjoyable rather then being too vague.

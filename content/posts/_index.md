@@ -1,4 +1,3 @@
 +++
-title = "posts"
-type = "posts"
+title = "Posts"
 +++

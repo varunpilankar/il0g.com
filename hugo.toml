@@ -7,7 +7,7 @@ sectionPagesMenu = "main"
 
 [params]
   # Cutting off the page title to two chars for mobile (console-demo -> co)
-  titleCutting = false
+  titleCutting = true
 
   # Set the animation style -- https://animate.style/
   # To disable animations, please remove or comment animationStyle parameter
@@ -15,6 +15,7 @@ sectionPagesMenu = "main"
 
   # Reference any custom CSS I make in the static/ dir
   #custom_css = ["till_custom_style.css"]
+  animateStyle = "animated zoomIn fast"
 
   subtitle = "Your Site Subtitle"
   brand = "il0g.com"
@@ -22,18 +23,26 @@ sectionPagesMenu = "main"
   github = "varunpilankar"
   disqusShortname = "il0g"
 
+
+[permalinks]
+  [permalinks.page]
+    posts = '/'
+  [permalinks.section]
+    posts = '/'
+
+
   [[params.navlinks]]
-  name = "posts"
+  name = "posts/"
   url = "posts/"
 
   [[params.navlinks]]
-  name = "photos"
+  name = "photos/"
   url = "photos/"
 
   [[params.navlinks]]
-  name = "about"
+  name = "about/"
   url = "about/"
 
   [[params.navlinks]]
-  name = "contact"
+  name = "contact/"
   url = "contact/"

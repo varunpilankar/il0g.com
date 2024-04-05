@@ -16,6 +16,12 @@ sectionPagesMenu = "main"
   # Reference any custom CSS I make in the static/ dir
   #custom_css = ["till_custom_style.css"]
 
+  subtitle = "Your Site Subtitle"
+  brand = "il0g.com"
+  author = "Indrasen Pilankar"
+  github = "varunpilankar"
+  disqusShortname = "il0g"
+
   [[params.navlinks]]
   name = "posts"
   url = "posts/"

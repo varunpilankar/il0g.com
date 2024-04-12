@@ -1,11 +1,11 @@
 +++
 title = "about"
-type = "post"
 +++
 
 # About | il0g.com :: Indrasen Pilankar aka Varun on Tech, Life, Business and more 
  
 ![](me_grid.jpg#floatright)
+*Me in Variable Expression*
 
 I am Indrasen Pilankar (aka Varun, my close circle calls me that), a seasoned Computer Science Instructor with a rich experience spanning over 8 years in the computational field. My journey in this domain has been nothing short of fascinating, filled with constant learning and exploration. I have a deep-seated passion for technology and its myriad applications, which is reflected in my diverse interests.
 

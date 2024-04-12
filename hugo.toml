@@ -1,6 +1,7 @@
 baseURL = "/"
 languageCode = "en-us"
 title = "il0g.com"
+copyright = 'Indrasen Pilankar'
 theme = "hugo-theme-console"
 sectionPagesMenu = "main"
 
@@ -42,6 +43,6 @@ sectionPagesMenu = "main"
 
 [services]
   [services.disqus]
-    shortname = 'varunpilankar'
+    disqusShortname = 'il0g'
 
 

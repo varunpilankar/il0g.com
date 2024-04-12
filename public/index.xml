@@ -2,11 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>il0g.com</title>
-    <link>http://localhost:1313/</link>
+    <link>//localhost:1313/</link>
     <description>Recent content on il0g.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Apr 2024 17:34:50 +0530</lastBuildDate>
+    <atom:link href="//localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Free Webiste With Hugo</title>
+      <link>//localhost:1313/posts/free-webiste-with-hugo/</link>
+      <pubDate>Fri, 05 Apr 2024 17:34:50 +0530</pubDate>
+      <guid>//localhost:1313/posts/free-webiste-with-hugo/</guid>
+      <description>Start sharing with Hugo, Git and Cloudflare Introduction Thank you opening my link to read through, weather you call this a post, blog, static website or hugo. the main purpose of writing this down and sharing openly online is in focus to unlearn and learn new things. And i thought improving my writing habits would be a great skill to sharpen this year as a goal. So this where i am embarrassing myself publicly online to get some feedback on how to improve this place and continue my journey as a habit to share online as much i could.</description>
+    </item>
+    <item>
+      <title>Sharing With Hugo</title>
+      <link>//localhost:1313/posts/sharing-with-hugo/</link>
+      <pubDate>Wed, 03 Apr 2024 03:15:08 +0530</pubDate>
+      <guid>//localhost:1313/posts/sharing-with-hugo/</guid>
+      <description>&lt;p&gt;Thank you opening my link to read through, weather you call this a post, blog, static website or hugo. the main purpose of writing this down and sharing openly online is in focus to unlearn and learn new things. And i thought improving my writing habits would be a great skill to sharpen this year as a goal.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>First_post</title>
+      <link>//localhost:1313/posts/first-post/</link>
+      <pubDate>Sat, 30 Mar 2024 01:14:15 +0530</pubDate>
+      <guid>//localhost:1313/posts/first-post/</guid>
+      <description>This Header 1 Header 2 </description>
+    </item>
   </channel>
 </rss>

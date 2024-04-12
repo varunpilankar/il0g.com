@@ -39,3 +39,9 @@ sectionPagesMenu = "main"
   [[params.navlinks]]
   name = "contact/"
   url = "contact/"
+
+[services]
+  [services.disqus]
+    shortname = 'varunpilankar'
+
+

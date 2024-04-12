@@ -1,8 +1,6 @@
 +++
-title = "about"
+title = "About | il0g.com : Indrasen Pilankar aka Varun on Tech, Life, Business and more"
 +++
-
-# About | il0g.com :: Indrasen Pilankar aka Varun on Tech, Life, Business and more 
  
 ![](me_grid.jpg#floatright)*Me in Variable Expression*
 

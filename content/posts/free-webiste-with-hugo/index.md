@@ -128,4 +128,52 @@ If you've already created a Hugo site but can't find the `config.toml` file, it'
 
 #### How to use Git Command (CheatSheet)
 
+Sure, here's a beginner-level Git command cheat sheet specifically for working with Hugo Static Site Generator (SSG):
+
+```markdown
+**Git Cheat Sheet for Hugo SSG**
+
+1. **Initialize a Git repository**
+   Use the command `git init` to initialize a new Git repository in your Hugo project directory.
+
+2. **Clone a Hugo Git repository**
+   Use `git clone <repository_url>` to clone a Hugo repository from a remote server to your local machine.
+
+3. **Check the status of your Hugo repository**
+   `git status` will show you the status of your Hugo repository, including any changes that have been staged, unstaged, or uncommitted.
+
+4. **Add changes to the staging area**
+   Use `git add <file>` to add a specific file to the staging area, or `git add .` to add all changes in the current directory.
+
+5. **Commit changes**
+   `git commit -m "<commit_message>"` will commit your staged changes to the repository with a descriptive message.
+
+6. **Push changes to a remote repository**
+   `git push origin master` will push your committed changes to the master branch of your remote repository.
+
+7. **Pull changes from a remote repository**
+   `git pull origin master` will fetch changes from the master branch of a remote repository and merge them into your current branch.
+
+8. **Create a new Hugo post**
+   Use `hugo new posts/<your-post>.md` to create a new post in your Hugo site.
+
+9. **Start the Hugo server**
+   Use `hugo server -D` to start the Hugo server and preview your site.
+
+Remember, this is a basic cheat sheet and there are many more commands and features in both Git and Hugo. This should help you get started with managing your Hugo site using Git.
+```
+#### Hugo Theme 
+
+Go to `https://themes.gohugo.io/`
+ickany theme you lik, and download its theme contain.
+Unzip and put the theme folder inside the project folder. For example: `/Users/ABC/Documents/Project/GitHub/hugo-site/themes/your-theme-folder`
+Now its time  to test if everything is working well. To do so , at the  main project folder  i.e. `hugo-site` open it in rterminal and run the follwoing command.
+
+`hugo server`
+
+This  willl help you run the we page on local  sever to see if everyhtin is running well  before we push it to GitHub and  move on to Cloud Flare.
+
+
+I hope this helps! Let me know if you have any other questions. 😊
+
 

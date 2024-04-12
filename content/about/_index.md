@@ -3,7 +3,7 @@ title = "About | il0g.com : Indrasen Pilankar aka Varun on Tech, Life, Business 
 +++
 
 <figure>
-  <img src="me_grid.jpg" alt="Me in Variable Expression" style="width:100px;">
+  <img src="/me_grid.jpg" alt="Me in Variable Expression" style="width:50px;">
   <figcaption>Me in Variable Expression</figcaption>
 </figure>
 

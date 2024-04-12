@@ -4,5 +4,7 @@
 {{ end }}
 <br/><br/>
 {{ .Content }}
-{{ template "_internal/disqus.html" . }}
+{{- partial "disqus.html" . -}}
+{{- partial "comments.html" . -}}
+{{ template "_default/disqus.html" . }}
 {{ end }}

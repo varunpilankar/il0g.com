@@ -24,6 +24,9 @@
     {{ end }}
     {{- partial "opengraph.html" . -}}
     {{- partial "twitter_cards.html" . -}}
+    {{- partial "disqus.html" . -}}
+    {{- partial "comments.html" . -}}
+    {{ template "_default/disqus.html" . }}
     {{ template "_internal/google_analytics.html" . }}
 
     {{- partial "header.html" . -}}

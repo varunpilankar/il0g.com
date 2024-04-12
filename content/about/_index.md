@@ -3,11 +3,12 @@ title = "About | il0g.com : Indrasen Pilankar aka Varun on Tech, Life, Business 
 +++
 
 <figure>
-  <img src="/me_grid.jpg" alt="Me in Variable Expression" style="width:50px;">
+  <img src="me_grid.jpg" alt="Me in Variable Expression" style="width:50px;">
   <figcaption>Me in Variable Expression</figcaption>
 </figure>
 
 ![Me in Variable Expression](me_grid.jpg "Me in Variable Expression")
+*Me in Variable Expression.*
 
 I am Indrasen Pilankar (aka Varun, my close circle calls me that), a seasoned Computer Science Instructor with a rich experience spanning over 8 years in the computational field. My journey in this domain has been nothing short of fascinating, filled with constant learning and exploration. I have a deep-seated passion for technology and its myriad applications, which is reflected in my diverse interests.
 

@@ -43,6 +43,4 @@ sectionPagesMenu = "main"
 
 [services]
   [services.disqus]
-    shortname = 'il0g'
-
-
+    shortname = "il0g"

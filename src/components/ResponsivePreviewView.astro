@@ -1,0 +1,215 @@
+---
+import { PRIMARY_ROUTES } from '../data/site';
+---
+
+<main class="page-main">
+  <div class="container-wide">
+    <!-- Responsive Viewport Header (Vertical Menu Bar for Mobile & Tablet with il0g.com:~# prompt) -->
+    <section class="intro-header">
+      <div class="status-line">
+        <span class="status-dot"></span>
+        <span>signature `il0g.com:~#` prompt + vertical collapsible menu drawer for mobile (375px) &amp; tablet (768px)</span>
+      </div>
+      <h1 class="page-title">[viewports] — Mobile (375px) &amp; Tablet (768px) Vertical Menu UI</h1>
+      <p class="page-lead">
+        Instead of cramming 6 links into a horizontal scroll bar, both <strong>Mobile (`375px`)</strong> and <strong>Tablet (`768px`)</strong> viewports feature the signature <code>il0g.com:~#</code> terminal prompt before the blinking cursor and a <strong>Vertical Terminal Menu Bar (`≡ menu`)</strong> that displays all 6 routes (`/home` through `/contact`) in a touch-friendly vertical list.
+      </p>
+      <div class="action-row">
+        <a href="/" data-page="home" class="btn-console primary">← back to /home</a>
+        <a href="/posts" data-page="posts" class="btn-console">view /posts</a>
+        <a href="/cv" data-page="cv" class="btn-console">view /cv</a>
+      </div>
+    </section>
+
+    <!-- Side-by-Side Mobile (375px) & Tablet (768px) Interactive Frame Preview -->
+    <div class="viewport-showcase">
+      <!-- 1. Mobile 375px Frame with Expanded Vertical Menu Bar -->
+      <div class="device-frame">
+        <div class="device-bar">
+          <span>📱 iPhone / Android (375px)</span>
+          <span id="sim-mobile-status">vertical menu open</span>
+        </div>
+        <div style="padding: 14px;">
+          <!-- Simulated Mobile Top Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid var(--border-line);">
+            <a href="/" style="font-family: var(--font-mono); font-weight: 600; font-size: 13px; color: var(--text-main); display: inline-flex; align-items: center; text-decoration: none;">
+              il0g.com<span style="color: var(--accent);">:~#</span><span class="prompt-cursor" aria-hidden="true"></span>
+            </a>
+            <div style="display: flex; gap: 6px;">
+              <button
+                type="button"
+                onclick="document.getElementById('theme-toggle-btn')?.click()"
+                style="font-family: var(--font-mono); font-size: 11px; padding: 4px 7px; border: 1px solid var(--border-line); border-radius: 3px; background: var(--bg-subtle); color: var(--text-main); cursor: pointer;"
+              >
+                theme
+              </button>
+              <button
+                type="button"
+                id="sim-mobile-toggle"
+                aria-expanded="true"
+                aria-controls="sim-mobile-drawer"
+                style="font-family: var(--font-mono); font-size: 11px; padding: 4px 8px; background: var(--text-main); color: var(--bg-page); border: 1px solid var(--text-main); border-radius: 3px; cursor: pointer;"
+              >
+                ✕ close
+              </button>
+            </div>
+          </div>
+
+          <!-- Simulated Mobile Vertical Menu Bar (All 6 Links Visible Vertically) -->
+          <div
+            id="sim-mobile-drawer"
+            style="background: var(--bg-subtle); border: 1px solid var(--border-line); border-radius: 4px; padding: 10px; margin: 10px 0 16px;"
+          >
+            <div style="font-family: var(--font-mono); font-size: 10.5px; color: var(--text-muted); padding-bottom: 6px; border-bottom: 1px dashed var(--border-line); margin-bottom: 4px;">
+              $ ls -la /navigation (6 routes · 44px touch rows)
+            </div>
+            <div style="display: flex; flex-direction: column; font-family: var(--font-mono); font-size: 12px;">
+              {
+                PRIMARY_ROUTES.map((route, i) => (
+                  <a
+                    href={route.href}
+                    data-page={route.pageId}
+                    style={`padding: 8px 4px; ${i < PRIMARY_ROUTES.length - 1 ? 'border-bottom: 1px solid var(--border-line);' : ''} text-decoration: none; display: flex; justify-content: space-between; align-items: center; min-height: 40px;`}
+                  >
+                    <span>
+                      <strong>
+                        {route.idx} {route.cmd}
+                      </strong>
+                    </span>
+                    <span style="color: var(--text-muted); font-size: 11px;">{route.mobileDesc}</span>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+
+          <!-- Simulated Stacked Mobile Content -->
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--status-green); margin-bottom: 4px;">● indrasen (varun) pilankar</div>
+          <div style="font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--text-main); margin-bottom: 6px;">me in variable expression</div>
+          <p style="font-size: 13px; color: var(--text-body); margin-bottom: 12px;">
+            Stacked single-column flow on 375px screens: dates sit cleanly above post titles with zero horizontal overflow.
+          </p>
+          <div style="border-top: 1px solid var(--border-line); padding-top: 10px;">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">2025-02-18 · 6m</div>
+            <a href="/posts/architecting-zero-cloud-smb-storage-omv-zfs-nextcloud" data-page="article-view" style="font-weight: 600; font-size: 13.5px; color: var(--text-main); text-decoration: none;">
+              Architecting Zero-Cloud SMB Storage with OpenMediaVault &amp; ZFS
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Tablet 768px Frame with Vertical Menu Drawer + 2-Column Log Grid -->
+      <div class="device-frame">
+        <div class="device-bar">
+          <span>📟 iPad / Tablet Portrait (768px)</span>
+          <span id="sim-tablet-status">vertical menu drawer + 2-col log grid</span>
+        </div>
+        <div style="padding: 18px;">
+          <!-- Simulated Tablet Top Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-line);">
+            <a href="/" style="font-family: var(--font-mono); font-weight: 600; font-size: 14px; color: var(--text-main); display: inline-flex; align-items: center; text-decoration: none;">
+              il0g.com<span style="color: var(--accent);">:~#</span><span class="prompt-cursor" aria-hidden="true"></span>
+            </a>
+            <div style="display: flex; gap: 8px;">
+              <button
+                type="button"
+                onclick="document.getElementById('theme-toggle-btn')?.click()"
+                style="font-family: var(--font-mono); font-size: 11.5px; padding: 4px 10px; border: 1px solid var(--border-line); border-radius: 3px; background: var(--bg-subtle); color: var(--text-main); cursor: pointer;"
+              >
+                theme: light/dark
+              </button>
+              <button
+                type="button"
+                id="sim-tablet-toggle"
+                aria-expanded="true"
+                aria-controls="sim-tablet-drawer"
+                style="font-family: var(--font-mono); font-size: 11.5px; padding: 4px 10px; background: var(--bg-subtle); color: var(--text-main); border: 1px solid var(--border-strong); border-radius: 3px; cursor: pointer;"
+              >
+                ≡ menu (vertical drawer)
+              </button>
+            </div>
+          </div>
+
+          <!-- Simulated Tablet Vertical Menu Bar -->
+          <div
+            id="sim-tablet-drawer"
+            style="background: var(--bg-subtle); border: 1px solid var(--border-line); border-radius: 4px; padding: 12px; margin: 12px 0 18px;"
+          >
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); padding-bottom: 6px; border-bottom: 1px dashed var(--border-line); margin-bottom: 6px;">
+              <span>$ ls -la /navigation (tablet vertical menu bar)</span>
+              <span>all 6 routes + descriptions visible</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 2px; font-family: var(--font-mono); font-size: 12.5px;">
+              {
+                PRIMARY_ROUTES.map((route, i) => (
+                  <a
+                    href={route.href}
+                    data-page={route.pageId}
+                    style={`padding: 7px 6px; ${i < PRIMARY_ROUTES.length - 1 ? 'border-bottom: 1px solid var(--border-line);' : ''} text-decoration: none; display: grid; grid-template-columns: 32px 100px 1fr; align-items: center;`}
+                  >
+                    <span style="color: var(--text-muted);">{route.idx}</span>
+                    <strong>{route.cmd}</strong>
+                    <span style="color: var(--text-muted); font-size: 12px;">{route.tabletDesc}</span>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+
+          <!-- Simulated Tablet 2-Column Log Stream -->
+          <div style="font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-main); padding-bottom: 6px; border-bottom: 1px solid var(--border-line); margin-bottom: 10px;">
+            # tablet 2-column log layout (140px date column + fluid content)
+          </div>
+          <div style="display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--border-line);">
+            <span style="font-family: var(--font-mono); font-size: 11.5px; color: var(--text-muted);">2025-02-18 · 6m</span>
+            <div>
+              <a href="/posts/architecting-zero-cloud-smb-storage-omv-zfs-nextcloud" data-page="article-view" style="font-weight: 600; font-size: 14px; color: var(--text-main); text-decoration: none;">
+                Architecting Zero-Cloud SMB Storage with OpenMediaVault, ZFS &amp; Nextcloud
+              </a>
+              <p style="font-size: 12.5px; color: var(--text-body); margin-top: 2px;">Cutting recurring cloud storage TCO by 68% with local 2.5GbE ZFS appliances.</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 8px 0;">
+            <span style="font-family: var(--font-mono); font-size: 11.5px; color: var(--text-muted);">2025-01-29 · 5m</span>
+            <div>
+              <a href="/posts/bypassing-android-audio-mixer-bit-perfect-usb-dac" data-page="article-view" style="font-weight: 600; font-size: 14px; color: var(--text-main); text-decoration: none;">
+                Bypassing Android's Audio Mixer for Bit-Perfect USB DAC Output
+              </a>
+              <p style="font-size: 12.5px; color: var(--text-body); margin-top: 2px;">Kernel &amp; HAL audio routing notes from building BitPerfect-DAC.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script is:inline>
+  (function () {
+    var mToggle = document.getElementById('sim-mobile-toggle');
+    var mDrawer = document.getElementById('sim-mobile-drawer');
+    var mStatus = document.getElementById('sim-mobile-status');
+    if (mToggle && mDrawer) {
+      mToggle.addEventListener('click', function () {
+        var hidden = mDrawer.style.display === 'none';
+        mDrawer.style.display = hidden ? 'block' : 'none';
+        mToggle.setAttribute('aria-expanded', hidden ? 'true' : 'false');
+        mToggle.textContent = hidden ? '✕ close' : '≡ menu';
+        if (mStatus) {
+          mStatus.textContent = hidden ? 'vertical menu open' : 'vertical menu closed';
+        }
+      });
+    }
+
+    var tToggle = document.getElementById('sim-tablet-toggle');
+    var tDrawer = document.getElementById('sim-tablet-drawer');
+    if (tToggle && tDrawer) {
+      tToggle.addEventListener('click', function () {
+        var hidden = tDrawer.style.display === 'none';
+        tDrawer.style.display = hidden ? 'block' : 'none';
+        tToggle.setAttribute('aria-expanded', hidden ? 'true' : 'false');
+        tToggle.textContent = hidden ? '≡ menu (vertical drawer)' : '≡ menu (expand)';
+      });
+    }
+  })();
+</script>

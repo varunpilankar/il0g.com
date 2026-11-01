@@ -1,0 +1,85 @@
+<main class="page-main">
+  <div class="container">
+    <!-- Minimal Contact Header (Replaces broken Disqus /contact/ page with Cloudflare Free Plan protection) -->
+    <section class="intro-header">
+      <div class="status-line">
+        <span class="status-dot"></span>
+        <span>cloudflare pages function + turnstile (free plan) · direct inbox delivery</span>
+      </div>
+      <h1 class="page-title">/contact — ping indrasen (varun)</h1>
+      <p class="page-lead">
+        Whether you're looking to deploy a private eHom NAS server, discuss a systems engineering role, or talk about Python, Linux, or records—drop a message below or book a quick call.
+      </p>
+    </section>
+
+    <!-- Fast 1-Click Channels -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># 01. direct channels &amp; social endpoints</h2>
+        <span class="section-more">response &lt; 24h</span>
+      </div>
+      <div class="log-list">
+        <div class="log-row">
+          <div class="log-meta">calendar</div>
+          <div>
+            <a href="#cv" data-page="cv" class="log-title">cal.com / indrasen-pilankar / 15min →</a>
+            <p class="log-desc">Fastest way for founders, CTOs, and consulting clients to grab 15 minutes on my calendar.</p>
+          </div>
+        </div>
+        <div class="log-row">
+          <div class="log-meta">email</div>
+          <div>
+            <a href="mailto:varun@il0g.com" class="log-title">varun@il0g.com ↗</a>
+            <p class="log-desc">Direct email (PGP key available on GitHub).</p>
+          </div>
+        </div>
+        <div class="log-row">
+          <div class="log-meta">networks</div>
+          <div class="log-desc">
+            <a href="https://www.linkedin.com/in/indrasenpilankar" target="_blank" rel="noopener">LinkedIn (/in/indrasenpilankar) ↗</a> ·
+            <a href="https://github.com/varunpilankar" target="_blank" rel="noopener">GitHub (@varunpilankar) ↗</a> ·
+            <a href="#shelf" data-page="shelf">Spotify &amp; Instagram (/shelf) →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Zero-Maintenance Direct Message Form (Cloudflare Turnstile Free Plan) -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># 02. send a direct message ($ mail -s)</h2>
+        <span class="turnstile-badge">✓ Cloudflare Turnstile Free Tier</span>
+      </div>
+
+      <form class="intent-callout" onsubmit="event.preventDefault(); this.querySelector('.send-btn').textContent='✓ delivered to varun@il0g.com';">
+        <div class="form-grid form-grid-2" style="margin-bottom: 12px;">
+          <div>
+            <label class="field-label">your name *</label>
+            <input type="text" class="field-input" placeholder="Ananya Sharma" required />
+          </div>
+          <div>
+            <label class="field-label">your email (for direct reply) *</label>
+            <input type="email" class="field-input" placeholder="ananya@company.io" required />
+          </div>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label class="field-label">topic / intent</label>
+          <select class="field-input">
+            <option>Consulting / Private NAS &amp; Linux Infrastructure (eHom)</option>
+            <option>Engineering Leadership / Role Opportunity</option>
+            <option>Speaking / Python &amp; Systems Workshop</option>
+            <option>General Note / Blog Feedback</option>
+          </select>
+        </div>
+        <div style="margin-bottom: 14px;">
+          <label class="field-label">message *</label>
+          <textarea class="field-textarea" rows="4" placeholder="Tell me briefly about your project, storage/systems setup, or question..." required></textarea>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">routed via cloudflare email routing · reply-to set to your inbox</span>
+          <button type="submit" class="btn-console primary send-btn">send message →</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>

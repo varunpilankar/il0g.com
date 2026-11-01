@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mumbai-dusk",
+    "order": 1,
+    "src": "https://picsum.photos/seed/mumbai-rain/420/260",
+    "alt": "Monsoon dusk in Mumbai",
+    "filename": "mumbai_dusk.jpg",
+    "tag": "35mm",
+    "featuredOnHome": true,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "ehom-nas-v3",
+    "order": 2,
+    "src": "https://picsum.photos/seed/nas-rack/420/260",
+    "alt": "Custom 4-bay Linux ZFS NAS build",
+    "filename": "ehom_nas_v3.jpg",
+    "tag": "lab",
+    "featuredOnHome": true,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "flac-rig",
+    "order": 3,
+    "src": "https://picsum.photos/seed/dac-audio/420/260",
+    "alt": "USB DAC & IEM setup",
+    "filename": "flac_rig.jpg",
+    "tag": "audio",
+    "featuredOnHome": true,
+    "featuredOnShelf": true
+  }
+]

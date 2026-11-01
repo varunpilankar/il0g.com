@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostReaderView from '../../components/PostReaderView.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+
+  return posts.map((post, idx) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      prevPost: posts[idx + 1] ?? posts[0],
+      nextPost: posts[idx - 1] ?? posts[posts.length - 1],
+    },
+  }));
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+---
+
+<BaseLayout
+  title={`${post.data.title} — il0g.com:~#`}
+  description={post.data.description}
+  currentPath={`/posts/${post.id}`}
+>
+  <PostReaderView post={post} prevPost={prevPost} nextPost={nextPost} />
+</BaseLayout>

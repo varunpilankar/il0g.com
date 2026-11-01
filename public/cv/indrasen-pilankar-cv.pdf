@@ -1,0 +1,60 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+5 0 obj
+<< /Length 1843 >>
+stream
+BT
+/F1 10 Tf
+50 760 Td
+14 TL
+(Indrasen \(Varun\) Pilankar - Systems Architect & Co-Founder \(eHom Technologies\)) Tj T*
+(Web: https://il0g.com/cv | GitHub: https://github.com/varunpilankar | LinkedIn: /in/indrasenpilankar) Tj T*
+(--------------------------------------------------------------------------------) Tj T*
+(SUMMARY) Tj T*
+(Systems Architect, Co-Founder at eHom Technologies, Published Technical Author \(Packt\),) Tj T*
+(and CS Educator with 8+ years of experience across Linux/FreeBSD storage, computer) Tj T*
+(networks, cloud infrastructure, and embedded/Android systems.) Tj T*
+() Tj T*
+(EXPERIENCE & QUANTIFIED OUTCOMES) Tj T*
+(1. Co-Founder & Systems Architect - eHom Technologies \(2020 - Present\)) Tj T*
+(   * Architected turnkey Linux/OpenMediaVault/ZFS NAS appliances, cutting 3-yr TCO by 68%.) Tj T*
+(   * Engineered automated local + remote encrypted backups \(99.98% durability, 2.5GbE\).) Tj T*
+(2. Assistant Professor / Lecturer in Computer Science & Engineering \(2016 - Present\)) Tj T*
+(   * Taught 1,200+ undergraduate CS/IT students across Mumbai University colleges.) Tj T*
+(   * Mentored 35+ final-year hardware and distributed systems capstone projects.) Tj T*
+(3. Published Technical Author - Packt Publishing UK \(2018 - 2019\)) Tj T*
+(   * Authored Getting Started with Object-Oriented Programming in Python 3.) Tj T*
+(4. Creator & Maintainer - BitPerfect-DAC & hungryGMS \(@varunpilankar\)) Tj T*
+(   * Open-source Android audio HAL & kernel wakelock modules \(42% idle drain reduction\).) Tj T*
+() Tj T*
+(TECHNICAL STACK & EDUCATION) Tj T*
+(* Systems & OS: Linux \(Debian, Arch, OMV\), FreeBSD, OpenZFS, Docker, Proxmox, WireGuard) Tj T*
+(* Languages: Python 3, C, C++, POSIX Shell / Bash, SQL, TypeScript \(Astro\)) Tj T*
+(* Education: M.Sc. & B.Sc. in Computer Science - University of Mumbai) Tj T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000309 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2204
+%%EOF

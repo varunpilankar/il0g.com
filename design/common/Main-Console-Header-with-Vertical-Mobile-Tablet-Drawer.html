@@ -1,0 +1,91 @@
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a href="#home" data-page="home" class="brand-prompt" aria-label="il0g.com Home — Indrasen's Log">
+      <span class="prompt-user">il0g.com</span><span class="prompt-path">:~#</span><span class="prompt-cursor" aria-hidden="true"></span>
+    </a>
+
+    <!-- Desktop Horizontal Console Menu (>= 860px) -->
+    <nav class="site-nav desktop-nav" aria-label="Primary Navigation">
+      <a href="#home" data-page="home" class="nav-link">/home</a>
+      <a href="#posts" data-page="posts" class="nav-link">/posts</a>
+      <a href="#projects" data-page="projects" class="nav-link">/projects</a>
+      <a href="#shelf" data-page="shelf" class="nav-link">/shelf</a>
+      <a href="#cv" data-page="cv" class="nav-link">/cv</a>
+      <a href="#contact" data-page="contact" class="nav-link">/contact</a>
+      <a href="#responsive-preview" data-page="responsive-preview" class="nav-link nav-badge-link" title="Inspect Mobile & Tablet Vertical Menu UI">[viewports]</a>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="theme-toggle" onclick="(function(btn){var r=document.documentElement;var d=r.getAttribute('data-theme')==='dark';r.setAttribute('data-theme',d?'light':'dark');var lbl=btn.querySelector('.theme-label');if(lbl){lbl.textContent=d?'theme: light':'theme: dark';}})(this)" aria-label="Toggle Light and Dark Mode">
+        <span class="theme-dot" aria-hidden="true"></span>
+        <span class="theme-label">theme</span>
+      </button>
+
+      <!-- Mobile & Tablet Vertical Menu Trigger (< 860px) -->
+      <button type="button" class="mobile-menu-btn" onclick="(function(btn){var d=document.getElementById('vertical-nav-drawer');if(d){var open=d.classList.toggle('is-open');btn.setAttribute('aria-expanded',open);btn.querySelector('.menu-btn-text').textContent=open?'✕ close':'≡ menu';}})(this)" aria-expanded="false" aria-controls="vertical-nav-drawer">
+        <span class="menu-btn-text">≡ menu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Collapsible Vertical Terminal Menu Bar for Mobile & Tablet -->
+  <nav id="vertical-nav-drawer" class="vertical-nav-drawer" aria-label="Mobile and Tablet Vertical Navigation">
+    <div class="container vertical-nav-inner">
+      <div class="vertical-nav-header">
+        <span>$ ls -la /navigation (6 routes)</span>
+        <span>tap to navigate</span>
+      </div>
+      <ul class="vertical-nav-list">
+        <li>
+          <a href="#home" data-page="home" class="vertical-nav-item">
+            <span class="v-idx">01</span>
+            <span class="v-cmd">/home</span>
+            <span class="v-desc">overview, latest logs &amp; photos</span>
+          </a>
+        </li>
+        <li>
+          <a href="#posts" data-page="posts" class="vertical-nav-item">
+            <span class="v-idx">02</span>
+            <span class="v-cmd">/posts</span>
+            <span class="v-desc">24 essays on systems, linux &amp; startups</span>
+          </a>
+        </li>
+        <li>
+          <a href="#projects" data-page="projects" class="vertical-nav-item">
+            <span class="v-idx">03</span>
+            <span class="v-cmd">/projects</span>
+            <span class="v-desc">eHom NAS, BitPerfect-DAC &amp; hardware</span>
+          </a>
+        </li>
+        <li>
+          <a href="#shelf" data-page="shelf" class="vertical-nav-item">
+            <span class="v-idx">04</span>
+            <span class="v-cmd">/shelf</span>
+            <span class="v-desc">auto-synced spotify, books, films &amp; 35mm</span>
+          </a>
+        </li>
+        <li>
+          <a href="#cv" data-page="cv" class="vertical-nav-item">
+            <span class="v-idx">05</span>
+            <span class="v-cmd">/cv</span>
+            <span class="v-desc">experience, metrics &amp; book 15-min call</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" data-page="contact" class="vertical-nav-item">
+            <span class="v-idx">06</span>
+            <span class="v-cmd">/contact</span>
+            <span class="v-desc">cloudflare turnstile inbox &amp; socials</span>
+          </a>
+        </li>
+        <li>
+          <a href="#responsive-preview" data-page="responsive-preview" class="vertical-nav-item">
+            <span class="v-idx">07</span>
+            <span class="v-cmd">[viewports]</span>
+            <span class="v-desc">preview 375px mobile &amp; 768px tablet UI</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SHELF_PHOTOS } from '../data/site';
+import {
+  DEFAULT_SHELF_EVERGREEN,
+  DEFAULT_SHELF_ROTATION,
+} from '../data/shelf';
+
+const photoEntries = (await getCollection('photos', ({ data }) => data.featuredOnShelf)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const shelfPhotos =
+  photoEntries.length >= 6 ? photoEntries.map((entry) => entry.data) : SHELF_PHOTOS;
+---
+
+<BaseLayout
+  title="il0g.com:~# — /shelf · Music, Books, Cinema & 35mm"
+  currentPath="/shelf"
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Cultural Shelf Header (Automated Live Feeds so it never goes stale) -->
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot"></span>
+          <span>auto-synced via cloudflare worker · spotify api + goodreads/letterboxd rss</span>
+        </div>
+        <h1 class="page-title">/shelf — music, books, cinema &amp; 35mm</h1>
+        <p class="page-lead">
+          Zero manual YAML babysitting: my music rotation syncs hourly from the Spotify Web API, and book/film logs pull automatically via RSS alongside all-time favorites.
+        </p>
+      </section>
+
+      <!-- Live Automated Feed (Spotify + Reading + Cinema) -->
+      <section class="section-block" data-shelf-feed>
+        <div class="section-head">
+          <h2 class="section-title"># live rotation (auto-synced edge cache)</h2>
+          <span class="section-more" data-shelf-updated>updated 14m ago</span>
+        </div>
+        <div class="log-list" data-shelf-rotation-list>
+          {
+            DEFAULT_SHELF_ROTATION.map((item) => (
+              <div class="log-row" data-rotation-id={item.id}>
+                <div class="log-meta">{item.meta}</div>
+                <div>
+                  <span class="log-title">{item.title}</span>
+                  <p class="log-desc" set:html={item.descHtml} />
+                  <div class="tag-row">
+                    {item.tags.map((tag) =>
+                      tag.href ? (
+                        <a
+                          href={tag.href}
+                          data-page={tag.pageId}
+                          class="tag"
+                          style={tag.color ? `color: ${tag.color};` : undefined}
+                        >
+                          {tag.label}
+                        </a>
+                      ) : (
+                        <span
+                          class="tag"
+                          style={tag.color ? `color: ${tag.color};` : undefined}
+                        >
+                          {tag.label}
+                        </span>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Evergreen All-Time Shelf (Never Goes Stale) -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># evergreen favorites (books, records &amp; films)</h2>
+          <span class="section-more">permanent canon</span>
+        </div>
+        <div class="log-list">
+          {
+            DEFAULT_SHELF_EVERGREEN.map((item) => (
+              <div class="log-row" data-evergreen-id={item.id}>
+                <div class="log-meta">{item.meta}</div>
+                <div>
+                  <span class="log-title">{item.title}</span>
+                  <p class="log-desc">{item.desc}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 35mm & Field Photography Log -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># /photos — street, hardware &amp; travel</h2>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="section-more">instagram ↗</a>
+        </div>
+        <div class="photo-grid">
+          {
+            shelfPhotos.map((photo) => (
+              <div class="photo-item">
+                <img src={photo.src} alt={photo.alt} loading="lazy" />
+                <div class="photo-caption">
+                  <span>{photo.filename}</span>
+                  <span>{photo.tag}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script is:inline>
+    (function () {
+      const updatedBadge = document.querySelector('[data-shelf-updated]');
+      if (!updatedBadge) return;
+      fetch('/api/shelf', { headers: { Accept: 'application/json' } })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data && data.updatedLabel) {
+            updatedBadge.textContent = data.updatedLabel;
+          }
+        })
+        .catch(() => {});
+    })();
+  </script>
+</BaseLayout>

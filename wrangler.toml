@@ -1,0 +1,14 @@
+name = "il0g-com"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-02-01"
+
+[vars]
+SITE_URL = "https://il0g.com"
+AUTHOR_EMAIL = "varun@il0g.com"
+TURNSTILE_MODE = "free-tier"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "il0g-comments-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"

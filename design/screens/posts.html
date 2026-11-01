@@ -1,0 +1,119 @@
+<main class="page-main">
+  <div class="container">
+    <!-- Page 2: Blog Posts Index Header + Pagefind Search + Topic Filter -->
+    <section class="intro-header">
+      <div class="status-line">
+        <span class="status-dot"></span>
+        <span>24 published essays · zero-js pagefind search · /rss.xml enabled</span>
+      </div>
+      <h1 class="page-title">/posts — systems, startups, experiments &amp; culture</h1>
+      <p class="page-lead">
+        Long-form notes on Linux storage, embedded/Android internals, building eHom Technologies, Python OOP, and what I'm reading, listening to, or watching.
+      </p>
+    </section>
+
+    <!-- Static Search & Category Filter Bar -->
+    <div class="filter-bar">
+      <div class="search-input-wrap">
+        <span class="search-prefix">$ grep -i</span>
+        <input type="search" class="search-input" placeholder="search 24 posts (e.g. zfs, magisk, python, startup, khruangbin)..." aria-label="Search blog posts" />
+      </div>
+      <div class="tag-row">
+        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">filter:</span>
+        <a href="#article-view" data-page="article-view" class="tag" style="color: var(--accent); border: 1px solid var(--accent);">all (24)</a>
+        <a href="#article-view" data-page="article-view" class="tag">#tech (10)</a>
+        <a href="#article-view" data-page="article-view" class="tag">#startup (4)</a>
+        <a href="#article-view" data-page="article-view" class="tag">#experiments (6)</a>
+        <a href="#article-view" data-page="article-view" class="tag">#books-music-film (4)</a>
+      </div>
+    </div>
+
+    <!-- 2025 Archive -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># 2025 (4 posts)</h2>
+        <span class="section-more">click any post to read →</span>
+      </div>
+      <div class="log-list">
+        <article class="log-row">
+          <div class="log-meta">2025-02-18 · 6m</div>
+          <div>
+            <a href="#article-view" data-page="article-view" class="log-title">Architecting Zero-Cloud SMB Storage with OpenMediaVault, ZFS &amp; Nextcloud</a>
+            <p class="log-desc">Field lessons from deploying private eHom NAS appliances: ARC memory tuning, scrub schedules, and WireGuard remote mesh.</p>
+            <div class="tag-row">
+              <span class="tag">#tech</span>
+              <span class="tag">#startup</span>
+              <span class="tag">#zfs</span>
+            </div>
+          </div>
+        </article>
+        <article class="log-row">
+          <div class="log-meta">2025-01-29 · 5m</div>
+          <div>
+            <a href="#article-view" data-page="article-view" class="log-title">Bypassing Android's Audio Mixer for Bit-Perfect USB DAC Output</a>
+            <p class="log-desc">Tracing Android's AudioFlinger resampling pipeline and writing `BitPerfect-DAC` for native 96kHz/24-bit FLAC playback.</p>
+            <div class="tag-row">
+              <span class="tag">#experiments</span>
+              <span class="tag">#android</span>
+              <span class="tag">#c</span>
+            </div>
+          </div>
+        </article>
+        <article class="log-row">
+          <div class="log-meta">2025-01-11 · 4m</div>
+          <div>
+            <a href="#article-view" data-page="article-view" class="log-title">Notes on Designing Data-Intensive Applications &amp; Late-Night Khruangbin</a>
+            <p class="log-desc">Book notes on consensus algorithms paired with my January vinyl &amp; FLAC rotation.</p>
+            <div class="tag-row">
+              <span class="tag">#books-music-film</span>
+              <span class="tag">#notes</span>
+            </div>
+          </div>
+        </article>
+        <article class="log-row">
+          <div class="log-meta">2025-01-03 · 7m</div>
+          <div>
+            <a href="#article-view" data-page="article-view" class="log-title">Why I Migrated il0g.com from Hugo to Astro 5.x on Cloudflare Pages</a>
+            <p class="log-desc">Fixing deprecated Hugo templates, broken Disqus embeds, and moving to strict TypeScript Content Collections with zero JS overhead.</p>
+            <div class="tag-row">
+              <span class="tag">#tech</span>
+              <span class="tag">#astro</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2024 Archive -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># 2024 (selected)</h2>
+        <span class="section-more">archive</span>
+      </div>
+      <div class="log-list">
+        <article class="log-row">
+          <div class="log-meta">2024-11-19 · 8m</div>
+          <div>
+            <a href="#article-view" data-page="article-view" class="log-title">Taming Google Play Services Wakelocks with hungryGMS</a>
+            <p class="log-desc">How idle drain works on modern Android kernels and cutting standby battery loss by 42% without breaking push notifications.</p>
+            <div class="tag-row">
+              <span class="tag">#experiments</span>
+              <span class="tag">#android</span>
+            </div>
+          </div>
+        </article>
+        <article class="log-row">
+          <div class="log-meta">2024-09-04 · 6m</div>
+          <div>
+            <a href="#article-view" data-page="article-view" class="log-title">Teaching Object-Oriented Python &amp; Computer Networks: 8 Years of Classroom Lessons</a>
+            <p class="log-desc">What writing a Python 3 book for Packt and teaching 1,200+ undergrads taught me about mental models in systems engineering.</p>
+            <div class="tag-row">
+              <span class="tag">#tech</span>
+              <span class="tag">#python</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>

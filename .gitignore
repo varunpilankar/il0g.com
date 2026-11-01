@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Astro build output & cache
+dist/
+.astro/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.hugo_build.lock
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404: command or path not found — il0g.com:~#" currentPath="/404">
+  <main class="page-main">
+    <div class="container">
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot" style="background-color: #d97706;"></span>
+          <span>exit code 127 · route not found</span>
+        </div>
+        <h1 class="page-title">bash: cd: path not found (HTTP 404)</h1>
+        <p class="page-lead">
+          The requested path does not exist on <code>il0g.com:~#</code>. Return to the console index or browse all essays.
+        </p>
+        <div class="action-row">
+          <a href="/" class="btn-console primary">cd /home →</a>
+          <a href="/posts" class="btn-console">ls /posts →</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

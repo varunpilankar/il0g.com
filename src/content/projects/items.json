@@ -1,0 +1,90 @@
+[
+  {
+    "id": "ehom-nas-stack",
+    "order": 1,
+    "meta": "eHom Tech · NAS",
+    "title": "eHom Private Cloud & OMV NAS Server Stack",
+    "href": "/projects",
+    "desc": "Centralized RAID/ZFS storage, automated Borg backups, and Plex/Jellyfin media engine deployed for SMBs and home labs.",
+    "section": "home-selected",
+    "tags": ["linux", "openmediavault", "zfs", "wireguard"],
+    "featuredOnHome": true
+  },
+  {
+    "id": "bitperfect-dac-hungrygms",
+    "order": 2,
+    "meta": "C / Shell · ★ 140+",
+    "title": "BitPerfect-DAC & magisk-module-hungryGMS",
+    "href": "/projects",
+    "desc": "Open-source Android system modules for lossless USB audio routing and taming Google Play Services wakelock battery drain.",
+    "section": "home-selected",
+    "tags": ["android-audio", "magisk", "usb-dac", "kernel-tuning"],
+    "featuredOnHome": true
+  },
+  {
+    "id": "ehom-appliance",
+    "order": 10,
+    "meta": "2020–present · eHom",
+    "title": "eHom Private NAS & Media Server Appliance",
+    "href": "/posts/architecting-zero-cloud-smb-storage-omv-zfs-nextcloud",
+    "desc": "Co-founded eHom Data Storage Solutions. Custom-engineered Linux/OpenMediaVault/ZFS storage servers with automated local + off-site encrypted backups, Nextcloud collaboration, and 4K hardware-transcoding media servers for SMBs and families.",
+    "section": "commercial",
+    "tags": ["linux", "openmediavault", "zfs", "wireguard"],
+    "featuredOnHome": false
+  },
+  {
+    "id": "diy-linux-tablet",
+    "order": 11,
+    "meta": "hardware · C++",
+    "title": "DIY Linux Tablet & Custom I2C/SPI Sensor Drivers",
+    "href": "",
+    "desc": "Built a modular portable Linux tablet from scratch with custom power management, 3D-printed enclosure, and low-level C++ sensor drivers.",
+    "section": "commercial",
+    "tags": ["embedded-linux", "c++", "iot"],
+    "featuredOnHome": false
+  },
+  {
+    "id": "bitperfect-dac",
+    "order": 20,
+    "meta": "Shell / C · Audio",
+    "title": "varunpilankar / BitPerfect-DAC ↗",
+    "href": "https://github.com/varunpilankar/BitPerfect-DAC",
+    "desc": "Android system module that reconfigures audio policy routing to bypass Android's default 48kHz resampler for bit-perfect hi-res USB DAC playback.",
+    "section": "open-source",
+    "tags": ["android-audio", "magisk", "usb-dac"],
+    "featuredOnHome": false
+  },
+  {
+    "id": "hungrygms",
+    "order": 21,
+    "meta": "Shell · Android",
+    "title": "varunpilankar / magisk-module-hungryGMS ↗",
+    "href": "https://github.com/varunpilankar/magisk-module-hungryGMS",
+    "desc": "Systemless optimization module that restricts aggressive Google Mobile Services (GMS) background wakelocks while preserving real-time FCM push delivery.",
+    "section": "open-source",
+    "tags": ["kernel-tuning", "battery", "shell"],
+    "featuredOnHome": false
+  },
+  {
+    "id": "il0g-astro",
+    "order": 22,
+    "meta": "Astro 5 · TypeScript",
+    "title": "varunpilankar / il0g.com",
+    "href": "/",
+    "desc": "This website: migrated from Hugo Console to Astro 5.x with strict Content Collections, Pagefind static search, and Cloudflare D1/Turnstile verified comments.",
+    "section": "open-source",
+    "tags": ["astro", "cloudflare-pages", "minimal-ui"],
+    "featuredOnHome": false
+  },
+  {
+    "id": "packt-python-oop",
+    "order": 30,
+    "meta": "Packt · Author",
+    "title": "Getting Started with Object-Oriented Programming in Python 3",
+    "href": "",
+    "desc": "Authored comprehensive video/hands-on curriculum published by Packt covering classes, inheritance, design patterns, and clean architecture in Python 3.",
+    "section": "book",
+    "tags": ["python-3", "oop", "technical-author"],
+    "featuredOnHome": false
+  }
+]

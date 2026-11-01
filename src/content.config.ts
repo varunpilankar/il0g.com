@@ -1,5 +1,5 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
@@ -24,4 +24,33 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const projects = defineCollection({
+  loader: file('./src/content/projects/items.json'),
+  schema: z.object({
+    id: z.string(),
+    order: z.number(),
+    meta: z.string(),
+    title: z.string(),
+    href: z.string(),
+    desc: z.string(),
+    section: z.enum(['home-selected', 'commercial', 'open-source', 'book']).default('home-selected'),
+    tags: z.array(z.string()).default([]),
+    featuredOnHome: z.boolean().default(false),
+  }),
+});
+
+const photos = defineCollection({
+  loader: file('./src/content/photos/items.json'),
+  schema: z.object({
+    id: z.string(),
+    order: z.number(),
+    src: z.string(),
+    alt: z.string(),
+    filename: z.string(),
+    tag: z.string(),
+    featuredOnHome: z.boolean().default(false),
+    featuredOnShelf: z.boolean().default(true),
+  }),
+});
+
+export const collections = { posts, projects, photos };

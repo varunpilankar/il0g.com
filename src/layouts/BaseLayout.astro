@@ -1,0 +1,55 @@
+---
+import ConsoleHeader from '../components/ConsoleHeader.astro';
+import ConsoleFooter from '../components/ConsoleFooter.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const {
+  title = 'il0g.com:~# — Indrasen (Varun) Pilankar · me in variable expression',
+  description = "Indrasen (Varun) Pilankar's personal console log (il0g.com:~#): Co-Founder & Systems Architect at eHom Technologies, Published Python Author (Packt), CS Instructor, and open-source Android kernel/audio tinkerer.",
+  currentPath = Astro.url.pathname,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="il0g.com:~# RSS Feed" href="/rss.xml" />
+
+    <!-- Zero-flash Light/Dark mode initialization before stylesheet & first paint -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('il0g-theme') || localStorage.getItem('theme');
+          var theme =
+            saved === 'dark' || saved === 'light'
+              ? saved
+              : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+
+    <!-- Approved Design System Stylesheet -->
+    <link rel="stylesheet" href="/design/design-system.css" />
+  </head>
+  <body>
+    <ConsoleHeader currentPath={currentPath} />
+    <slot />
+    <ConsoleFooter />
+  </body>
+</html>

@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SHELF_PHOTOS } from '../data/site';
+---
+
+<BaseLayout
+  title="il0g.com:~# — /shelf · Music, Books, Cinema & 35mm"
+  currentPath="/shelf"
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Cultural Shelf Header (Automated Live Feeds so it never goes stale) -->
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot"></span>
+          <span>auto-synced via cloudflare worker · spotify api + goodreads/letterboxd rss</span>
+        </div>
+        <h1 class="page-title">/shelf — music, books, cinema &amp; 35mm</h1>
+        <p class="page-lead">
+          Zero manual YAML babysitting: my music rotation syncs hourly from the Spotify Web API, and book/film logs pull automatically via RSS alongside all-time favorites.
+        </p>
+      </section>
+
+      <!-- Live Automated Feed (Spotify + Reading + Cinema) -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># live rotation (auto-synced edge cache)</h2>
+          <span class="section-more">updated 14m ago</span>
+        </div>
+        <div class="log-list">
+          <div class="log-row">
+            <div class="log-meta">♫ spotify · live</div>
+            <div>
+              <span class="log-title">Khruangbin — "A La Sala" (24-bit / 96kHz FLAC &amp; Spotify)</span>
+              <p class="log-desc">
+                Last played track: <em>May Ninth</em> · Top genres this month: Psychedelic Dub, Instrumental Post-Rock, Classic Indian Classical Fusion.
+              </p>
+              <div class="tag-row">
+                <span class="tag" style="color: var(--status-green);">● synced via spotify worker</span>
+                <span class="tag">usb-dac</span>
+              </div>
+            </div>
+          </div>
+          <div class="log-row">
+            <div class="log-meta">📖 goodreads rss</div>
+            <div>
+              <span class="log-title">Designing Data-Intensive Applications — Martin Kleppmann</span>
+              <p class="log-desc">
+                Re-reading Chapter 9 (Consistency and Consensus) alongside <em>Operating Systems: Three Easy Pieces</em> for my systems lectures.
+              </p>
+              <div class="tag-row">
+                <a href="/posts/notes-designing-data-intensive-applications-khruangbin" data-page="article-view" class="tag" style="color: var(--accent);">
+                  read my book notes →
+                </a>
+                <span class="tag">★ 5/5</span>
+              </div>
+            </div>
+          </div>
+          <div class="log-row">
+            <div class="log-meta">🎬 letterboxd rss</div>
+            <div>
+              <span class="log-title">Stalker (1979, dir. Andrei Tarkovsky) · 4K Remaster</span>
+              <p class="log-desc">
+                Streamed uncompressed from my local eHom Jellyfin NAS over 2.5GbE. Unmatched pacing and sound design.
+              </p>
+              <div class="tag-row">
+                <span class="tag">sci-fi</span>
+                <span class="tag">★ 5/5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Evergreen All-Time Shelf (Never Goes Stale) -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># evergreen favorites (books, records &amp; films)</h2>
+          <span class="section-more">permanent canon</span>
+        </div>
+        <div class="log-list">
+          <div class="log-row">
+            <div class="log-meta">books · canon</div>
+            <div>
+              <span class="log-title">UNIX and Linux System Administration Handbook · The Pragmatic Programmer · Zero to One</span>
+              <p class="log-desc">The three books I gift most often to students and early-stage technical founders.</p>
+            </div>
+          </div>
+          <div class="log-row">
+            <div class="log-meta">records · reference</div>
+            <div>
+              <span class="log-title">Daft Punk (Random Access Memories) · Pink Floyd (Wish You Were Here) · Nujabes</span>
+              <p class="log-desc">My reference tracks whenever testing a new USB DAC, IEM crossover, or kernel audio patch.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 35mm & Field Photography Log -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># /photos — street, hardware &amp; travel</h2>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="section-more">instagram ↗</a>
+        </div>
+        <div class="photo-grid">
+          {
+            SHELF_PHOTOS.map((photo) => (
+              <div class="photo-item">
+                <img src={photo.src} alt={photo.alt} loading="lazy" />
+                <div class="photo-caption">
+                  <span>{photo.filename}</span>
+                  <span>{photo.tag}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

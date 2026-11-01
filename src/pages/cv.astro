@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CV_ENGAGEMENT_MODELS, CV_EXPERIENCE, CV_TECH_STACK } from '../data/site';
+---
+
+<BaseLayout
+  title="il0g.com:~# — Indrasen (Varun) Pilankar · /cv"
+  currentPath="/cv"
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Authentic High-Conversion CV Header for Indrasen (Varun) Pilankar -->
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot"></span>
+          <span>open to systems/infrastructure leadership, hardware-software consulting &amp; advisory</span>
+        </div>
+        <h1 class="page-title">Indrasen (Varun) Pilankar — /cv</h1>
+        <p class="page-lead">
+          Systems Architect, Co-Founder at <strong>eHom Technologies</strong>, Published Technical Author (<strong>Packt</strong>), and CS Educator with 8+ years of experience across Linux/FreeBSD storage, computer networks, cloud infrastructure, and embedded/Android systems.
+        </p>
+        <div class="action-row">
+          <a href="/contact" data-page="contact" class="btn-console primary">📅 book 15-min intro call (cal.com) →</a>
+          <a
+            href="/cv/indrasen-pilankar-cv.pdf"
+            download="indrasen_pilankar_cv_2025.pdf"
+            onclick="this.textContent='✓ downloading indrasen_pilankar_cv.pdf';"
+            class="btn-console"
+          >
+            ↓ download_cv_2025.pdf
+          </a>
+          <a href="https://www.linkedin.com/in/indrasenpilankar" target="_blank" rel="noopener" class="btn-console">
+            linkedin/in/indrasenpilankar ↗
+          </a>
+        </div>
+      </section>
+
+      <!-- High-Intent Consulting & Hiring Box (Reserved Bordered Callout) -->
+      <div class="intent-callout">
+        <div class="intent-callout-header">
+          <span># how i can help your team (engagement models)</span>
+          <span>mumbai / remote worldwide</span>
+        </div>
+        <div class="log-list">
+          {
+            CV_ENGAGEMENT_MODELS.map((model) => (
+              <div class="log-row" style="padding: 8px 0;">
+                <div class="log-meta">{model.meta}</div>
+                <div>
+                  <strong style="color: var(--text-main);">{model.title}</strong> — {model.desc}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Quantified Experience Timeline with Direct Proof Links -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># experience &amp; quantified outcomes</h2>
+          <span class="section-more">8+ years</span>
+        </div>
+        <div class="log-list">
+          {
+            CV_EXPERIENCE.map((exp) => (
+              <div class="log-row">
+                <div class="log-meta">{exp.meta}</div>
+                <div>
+                  <span class="log-title">{exp.role}</span>
+                  <p class="log-desc">
+                    {exp.bullets.map((bullet, idx) => (
+                      <>
+                        • <Fragment set:html={bullet} />
+                        {(idx < exp.bullets.length - 1 || exp.proofLink) && <br />}
+                      </>
+                    ))}
+                    {exp.proofLink && (
+                      <>
+                        •{' '}
+                        <a
+                          href={exp.proofLink.href}
+                          data-page={exp.proofLink.dataPage}
+                          target={exp.proofLink.external ? '_blank' : undefined}
+                          rel={exp.proofLink.external ? 'noopener' : undefined}
+                          style="color: var(--accent);"
+                        >
+                          {exp.proofLink.label}
+                        </a>
+                      </>
+                    )}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Core Technical Stack & Education -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># technical stack &amp; education</h2>
+          <span class="section-more">verified</span>
+        </div>
+        <div class="log-list">
+          {
+            CV_TECH_STACK.map((row) => (
+              <div class="log-row">
+                <div class="log-meta">{row.meta}</div>
+                <div class="log-desc">
+                  <Fragment set:html={row.desc} />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

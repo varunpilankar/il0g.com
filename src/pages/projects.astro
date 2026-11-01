@@ -1,0 +1,191 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allProjects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+const commercialProjects = allProjects
+  .filter((p) => p.data.section === 'commercial')
+  .map((p) => p.data);
+const openSourceProjects = allProjects
+  .filter((p) => p.data.section === 'open-source')
+  .map((p) => p.data);
+const bookProjects = allProjects
+  .filter((p) => p.data.section === 'book')
+  .map((p) => p.data);
+---
+
+<BaseLayout
+  title="il0g.com:~# — /projects · Systems, Hardware & Open Source"
+  currentPath="/projects"
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Minimal Projects Header (Grounded in @varunpilankar GitHub & eHom Hardware) -->
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot"></span>
+          <span>open-source modules, custom hardware &amp; systems builds · github/@varunpilankar</span>
+        </div>
+        <h1 class="page-title">/projects — systems, hardware &amp; open source</h1>
+        <p class="page-lead">
+          Production storage appliances, Android kernel/Magisk modules, published books, and embedded hardware experiments.
+        </p>
+        <div class="action-row">
+          <a href="https://github.com/varunpilankar" target="_blank" rel="noopener" class="btn-console primary">github.com/varunpilankar ↗</a>
+          <a href="/cv" data-page="cv" class="btn-console">hire me for systems / hardware builds →</a>
+        </div>
+      </section>
+
+      <!-- Commercial & Hardware Systems -->
+      <section class="section-block" id="commercial">
+        <div class="section-head">
+          <h2 class="section-title"># 01. commercial &amp; hardware systems</h2>
+          <span class="section-more">production</span>
+        </div>
+        <div class="log-list">
+          {
+            commercialProjects.map((project) => (
+              <div class="log-row" id={project.id}>
+                <div class="log-meta">{project.meta}</div>
+                <div>
+                  {project.href ? (
+                    <a
+                      href={project.href}
+                      data-page={project.dataPage}
+                      target={project.external ? '_blank' : undefined}
+                      rel={project.external ? 'noopener' : undefined}
+                      class="log-title"
+                    >
+                      {project.title}
+                    </a>
+                  ) : (
+                    <span class="log-title">{project.title}</span>
+                  )}
+                  <p class="log-desc">{project.desc}</p>
+                  <div class="tag-row">
+                    {project.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                    {project.proofLink && (
+                      <a
+                        href={project.proofLink.href}
+                        data-page={project.proofLink.dataPage}
+                        target={project.proofLink.external ? '_blank' : undefined}
+                        rel={project.proofLink.external ? 'noopener' : undefined}
+                        class="tag"
+                        style="color: var(--accent);"
+                      >
+                        {project.proofLink.label}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Open-Source Repositories (@varunpilankar) -->
+      <section class="section-block" id="open-source">
+        <div class="section-head">
+          <h2 class="section-title"># 02. open-source repositories (@varunpilankar)</h2>
+          <a href="https://github.com/varunpilankar" target="_blank" rel="noopener" class="section-more">view all on github ↗</a>
+        </div>
+        <div class="log-list">
+          {
+            openSourceProjects.map((project) => (
+              <div class="log-row" id={project.id}>
+                <div class="log-meta">{project.meta}</div>
+                <div>
+                  {project.href ? (
+                    <a
+                      href={project.href}
+                      data-page={project.dataPage}
+                      target={project.external ? '_blank' : undefined}
+                      rel={project.external ? 'noopener' : undefined}
+                      class="log-title"
+                    >
+                      {project.title}
+                    </a>
+                  ) : (
+                    <span class="log-title">{project.title}</span>
+                  )}
+                  <p class="log-desc">{project.desc}</p>
+                  <div class="tag-row">
+                    {project.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                    {project.proofLink && (
+                      <a
+                        href={project.proofLink.href}
+                        data-page={project.proofLink.dataPage}
+                        target={project.proofLink.external ? '_blank' : undefined}
+                        rel={project.proofLink.external ? 'noopener' : undefined}
+                        class="tag"
+                        style="color: var(--accent);"
+                      >
+                        {project.proofLink.label}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Published Book & Curriculum -->
+      <section class="section-block" id="book">
+        <div class="section-head">
+          <h2 class="section-title"># 03. published book &amp; curriculum</h2>
+          <span class="section-more">packt publishing</span>
+        </div>
+        <div class="log-list">
+          {
+            bookProjects.map((project) => (
+              <div class="log-row" id={project.id}>
+                <div class="log-meta">{project.meta}</div>
+                <div>
+                  {project.href ? (
+                    <a
+                      href={project.href}
+                      data-page={project.dataPage}
+                      target={project.external ? '_blank' : undefined}
+                      rel={project.external ? 'noopener' : undefined}
+                      class="log-title"
+                    >
+                      {project.title}
+                    </a>
+                  ) : (
+                    <span class="log-title">{project.title}</span>
+                  )}
+                  <p class="log-desc">{project.desc}</p>
+                  <div class="tag-row">
+                    {project.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                    {project.proofLink && (
+                      <a
+                        href={project.proofLink.href}
+                        data-page={project.proofLink.dataPage}
+                        target={project.proofLink.external ? '_blank' : undefined}
+                        rel={project.proofLink.external ? 'noopener' : undefined}
+                        class="tag"
+                        style="color: var(--accent);"
+                      >
+                        {project.proofLink.label}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

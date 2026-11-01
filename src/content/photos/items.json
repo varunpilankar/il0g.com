@@ -1,0 +1,92 @@
+[
+  {
+    "id": "mumbai-dusk",
+    "order": 1,
+    "src": "https://picsum.photos/seed/mumbai-rain/420/260",
+    "alt": "Monsoon dusk in Mumbai",
+    "filename": "mumbai_dusk.jpg",
+    "tag": "35mm",
+    "featuredOnHome": true,
+    "featuredOnShelf": false
+  },
+  {
+    "id": "ehom-nas-v3",
+    "order": 2,
+    "src": "https://picsum.photos/seed/nas-rack/420/260",
+    "alt": "Custom 4-bay Linux ZFS NAS build",
+    "filename": "ehom_nas_v3.jpg",
+    "tag": "lab",
+    "featuredOnHome": true,
+    "featuredOnShelf": false
+  },
+  {
+    "id": "flac-rig",
+    "order": 3,
+    "src": "https://picsum.photos/seed/dac-audio/420/260",
+    "alt": "USB DAC & IEM setup",
+    "filename": "flac_rig.jpg",
+    "tag": "audio",
+    "featuredOnHome": true,
+    "featuredOnShelf": false
+  },
+  {
+    "id": "mumbai-monsoon-shelf",
+    "order": 10,
+    "src": "https://picsum.photos/seed/mumbai-rain/420/260",
+    "alt": "Mumbai Monsoon Street",
+    "filename": "mumbai_monsoon.jpg",
+    "tag": "2025",
+    "featuredOnHome": false,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "ehom-4bay-zfs-shelf",
+    "order": 11,
+    "src": "https://picsum.photos/seed/nas-rack/420/260",
+    "alt": "eHom ZFS Server Build",
+    "filename": "ehom_4bay_zfs.jpg",
+    "tag": "2025",
+    "featuredOnHome": false,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "dac-oscilloscope-shelf",
+    "order": 12,
+    "src": "https://picsum.photos/seed/dac-audio/420/260",
+    "alt": "BitPerfect DAC Bench",
+    "filename": "dac_oscilloscope.jpg",
+    "tag": "2024",
+    "featuredOnHome": false,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "konkan-coast-shelf",
+    "order": 13,
+    "src": "https://picsum.photos/seed/konkan-coast/420/260",
+    "alt": "Konkan Coast Sunset",
+    "filename": "konkan_coast.jpg",
+    "tag": "2024",
+    "featuredOnHome": false,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "freebsd-thinkpad-shelf",
+    "order": 14,
+    "src": "https://picsum.photos/seed/thinkpad-linux/420/260",
+    "alt": "Linux Terminal Setup",
+    "filename": "freebsd_thinkpad.jpg",
+    "tag": "2024",
+    "featuredOnHome": false,
+    "featuredOnShelf": true
+  },
+  {
+    "id": "v60-morning-shelf",
+    "order": 15,
+    "src": "https://picsum.photos/seed/coffee-filter/420/260",
+    "alt": "Morning Pour Over",
+    "filename": "v60_morning.jpg",
+    "tag": "2024",
+    "featuredOnHome": false,
+    "featuredOnShelf": true
+  }
+]

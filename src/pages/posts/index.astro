@@ -1,0 +1,322 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const posts2025 = allPosts.filter((p) => p.data.pubDate.getFullYear() === 2025);
+const posts2024 = allPosts.filter((p) => p.data.pubDate.getFullYear() <= 2024);
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function buildSearchCorpus(post: (typeof allPosts)[number]): string {
+  return [
+    post.data.title,
+    post.data.description,
+    post.data.category,
+    post.data.tags.join(' '),
+    post.body ?? '',
+    post.data.codeSnippet?.filename ?? '',
+    post.data.codeSnippet?.code ?? '',
+  ]
+    .join(' ')
+    .toLowerCase();
+}
+---
+
+<BaseLayout
+  title="il0g.com:~# — /posts · Systems, Startups, Experiments & Culture"
+  currentPath="/posts"
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Page 2: Blog Posts Index Header + Pagefind Search + Topic Filter -->
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot"></span>
+          <span>
+            24 published essays · zero-js pagefind search ·{' '}
+            <a href="/rss.xml" style="color: inherit; text-decoration: none;">/rss.xml enabled</a>
+          </span>
+        </div>
+        <h1 class="page-title">/posts — systems, startups, experiments &amp; culture</h1>
+        <p class="page-lead">
+          Long-form notes on Linux storage, embedded/Android internals, building eHom Technologies, Python OOP, and what I'm reading, listening to, or watching.
+        </p>
+      </section>
+
+      <!-- Static Search & Category Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-input-wrap">
+          <span class="search-prefix">$ grep -i</span>
+          <input
+            type="search"
+            id="posts-search-input"
+            class="search-input"
+            placeholder="search 24 posts (e.g. zfs, magisk, python, startup, khruangbin)..."
+            aria-label="Search blog posts"
+          />
+        </div>
+        <div class="tag-row" id="posts-tag-filters">
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">filter:</span>
+          <button
+            type="button"
+            data-filter="all"
+            class="tag filter-tag"
+            aria-pressed="true"
+            style="color: var(--accent); border: 1px solid var(--accent); cursor: pointer;"
+          >
+            all (24)
+          </button>
+          <button
+            type="button"
+            data-filter="#tech"
+            class="tag filter-tag"
+            aria-pressed="false"
+            style="border: 1px solid transparent; cursor: pointer;"
+          >
+            #tech (10)
+          </button>
+          <button
+            type="button"
+            data-filter="#startup"
+            class="tag filter-tag"
+            aria-pressed="false"
+            style="border: 1px solid transparent; cursor: pointer;"
+          >
+            #startup (4)
+          </button>
+          <button
+            type="button"
+            data-filter="#experiments"
+            class="tag filter-tag"
+            aria-pressed="false"
+            style="border: 1px solid transparent; cursor: pointer;"
+          >
+            #experiments (6)
+          </button>
+          <button
+            type="button"
+            data-filter="#books-music-film"
+            class="tag filter-tag"
+            aria-pressed="false"
+            style="border: 1px solid transparent; cursor: pointer;"
+          >
+            #books-music-film (4)
+          </button>
+        </div>
+      </div>
+
+      <!-- 2025 Archive -->
+      <section class="section-block" data-year-section="2025">
+        <div class="section-head">
+          <h2 class="section-title"># 2025 ({posts2025.length} posts)</h2>
+          <span class="section-more">click any post to read →</span>
+        </div>
+        <div class="log-list">
+          {
+            posts2025.map((post) => (
+              <article
+                class="log-row post-item"
+                data-category={`#${post.data.category}`.toLowerCase()}
+                data-tags={`${post.data.tags.join(' ')} #${post.data.category}`.toLowerCase()}
+                data-search={buildSearchCorpus(post)}
+              >
+                <div class="log-meta">
+                  {formatDate(post.data.pubDate)} · {post.data.readingTime}
+                </div>
+                <div>
+                  <a href={`/posts/${post.id}`} data-page="article-view" class="log-title">
+                    {post.data.title}
+                  </a>
+                  <p class="log-desc">{post.data.description}</p>
+                  <div class="tag-row">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag post-inline-tag" data-inline-tag={tag.toLowerCase()} style="cursor: pointer;">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 2024 Archive -->
+      <section class="section-block" data-year-section="2024">
+        <div class="section-head">
+          <h2 class="section-title"># 2024 (selected)</h2>
+          <span class="section-more">archive</span>
+        </div>
+        <div class="log-list">
+          {
+            posts2024.map((post) => (
+              <article
+                class="log-row post-item"
+                data-category={`#${post.data.category}`.toLowerCase()}
+                data-tags={`${post.data.tags.join(' ')} #${post.data.category}`.toLowerCase()}
+                data-search={buildSearchCorpus(post)}
+              >
+                <div class="log-meta">
+                  {formatDate(post.data.pubDate)} · {post.data.readingTime}
+                </div>
+                <div>
+                  <a href={`/posts/${post.id}`} data-page="article-view" class="log-title">
+                    {post.data.title}
+                  </a>
+                  <p class="log-desc">{post.data.description}</p>
+                  <div class="tag-row">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag post-inline-tag" data-inline-tag={tag.toLowerCase()} style="cursor: pointer;">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Console Empty Search State -->
+      <div
+        id="posts-empty-state"
+        style="display: none; padding: 20px; border: 1px dashed var(--border-line); border-radius: 4px; font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted);"
+      >
+        <span>$ grep -i: 0 matching essays found.</span>{' '}
+        <button
+          type="button"
+          id="posts-reset-filter"
+          class="copy-btn"
+          style="margin-left: 8px;"
+        >
+          [reset filter]
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script is:inline>
+    (function () {
+      var searchInput = document.getElementById('posts-search-input');
+      var filterButtons = document.querySelectorAll('.filter-tag');
+      var inlineTags = document.querySelectorAll('.post-inline-tag');
+      var postItems = document.querySelectorAll('.post-item');
+      var yearSections = document.querySelectorAll('[data-year-section]');
+      var emptyState = document.getElementById('posts-empty-state');
+      var resetBtn = document.getElementById('posts-reset-filter');
+      var activeFilter = 'all';
+
+      function updateFilterButtonStyles() {
+        filterButtons.forEach(function (b) {
+          var filterVal = (b.getAttribute('data-filter') || 'all').toLowerCase();
+          var isSelected = filterVal === activeFilter;
+          b.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+          b.style.color = isSelected ? 'var(--accent)' : '';
+          b.style.borderColor = isSelected ? 'var(--accent)' : 'transparent';
+        });
+      }
+
+      function applyFilter() {
+        var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+        var visibleTotal = 0;
+
+        postItems.forEach(function (item) {
+          var tags = (item.getAttribute('data-tags') || '').toLowerCase();
+          var search = (item.getAttribute('data-search') || '').toLowerCase();
+          var matchesTag = activeFilter === 'all' || tags.indexOf(activeFilter) !== -1;
+          var matchesSearch = !query || search.indexOf(query) !== -1;
+          var isVisible = matchesTag && matchesSearch;
+          item.style.display = isVisible ? '' : 'none';
+          if (isVisible) visibleTotal++;
+        });
+
+        yearSections.forEach(function (section) {
+          var items = section.querySelectorAll('.post-item');
+          var anyVisible = false;
+          items.forEach(function (it) {
+            if (it.style.display !== 'none') anyVisible = true;
+          });
+          section.style.display = anyVisible ? '' : 'none';
+        });
+
+        if (emptyState) {
+          emptyState.style.display = visibleTotal === 0 ? 'block' : 'none';
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilter);
+      }
+
+      filterButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeFilter = (btn.getAttribute('data-filter') || 'all').toLowerCase();
+          updateFilterButtonStyles();
+          applyFilter();
+        });
+      });
+
+      inlineTags.forEach(function (tagEl) {
+        tagEl.addEventListener('click', function () {
+          var tagVal = (tagEl.getAttribute('data-inline-tag') || '').toLowerCase();
+          if (!tagVal) return;
+          var hasTopButton = false;
+          filterButtons.forEach(function (b) {
+            if ((b.getAttribute('data-filter') || '').toLowerCase() === tagVal) {
+              hasTopButton = true;
+            }
+          });
+          if (hasTopButton) {
+            activeFilter = activeFilter === tagVal ? 'all' : tagVal;
+            updateFilterButtonStyles();
+          } else if (searchInput) {
+            searchInput.value = tagVal.replace(/^#/, '');
+          }
+          applyFilter();
+        });
+      });
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          activeFilter = 'all';
+          if (searchInput) searchInput.value = '';
+          updateFilterButtonStyles();
+          applyFilter();
+        });
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var urlTag = params.get('tag');
+      var urlQuery = params.get('q');
+      if (urlQuery && searchInput) {
+        searchInput.value = urlQuery;
+      }
+      if (urlTag) {
+        var normalizedTag = urlTag.startsWith('#') ? urlTag.toLowerCase() : '#' + urlTag.toLowerCase();
+        var matchedTopFilter = false;
+        filterButtons.forEach(function (b) {
+          if ((b.getAttribute('data-filter') || '').toLowerCase() === normalizedTag) {
+            matchedTopFilter = true;
+          }
+        });
+        if (matchedTopFilter) {
+          activeFilter = normalizedTag;
+          updateFilterButtonStyles();
+        } else if (searchInput) {
+          searchInput.value = urlTag.replace(/^#/, '');
+        }
+      }
+      if (urlTag || urlQuery) {
+        applyFilter();
+      }
+    })();
+  </script>
+</BaseLayout>

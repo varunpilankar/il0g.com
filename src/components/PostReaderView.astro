@@ -1,0 +1,273 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  prevPost: CollectionEntry<'posts'>;
+  nextPost: CollectionEntry<'posts'>;
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+const { Content, headings } = await render(post);
+
+const tocItems =
+  post.data.toc && post.data.toc.length > 0
+    ? post.data.toc
+    : headings.filter((h) => h.depth <= 3).map((h) => h.text.replace(/^\d+\.\s*/, ''));
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+const formattedReadingTime = post.data.readingTime.replace(/^(\d+)m$/, '$1 min');
+---
+
+<main class="page-main">
+  <div class="container">
+    <!-- Back Link -->
+    <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
+      <a href="/posts" data-page="posts" class="nav-link">← cd /posts</a>
+      <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+        reading time: {formattedReadingTime} · {post.data.wordCount || '1,420 words'}
+      </span>
+    </div>
+
+    <!-- Article Header -->
+    <article>
+      <header class="intro-header">
+        <div class="status-line">
+          <span>{formatDate(post.data.pubDate)}</span>
+          <span>·</span>
+          <span>by indrasen (varun) pilankar</span>
+          <span>·</span>
+          {
+            post.data.tags.map((tag) => (
+              <a href={`/posts?tag=${encodeURIComponent(tag)}`} class="tag">
+                {tag}
+              </a>
+            ))
+          }
+        </div>
+        <h1 class="page-title">{post.data.title}</h1>
+        <p class="page-lead">{post.data.description}</p>
+      </header>
+
+      <!-- Collapsible Console Table of Contents -->
+      {
+        tocItems.length > 0 && (
+          <details class="toc-console" open>
+            <summary>
+              ≡ table of contents ({tocItems.length} sections) ·{' '}
+              <span style="color: var(--text-muted); font-weight: 400;">
+                $ cat ./table_of_contents.toc
+              </span>
+            </summary>
+            <ol class="toc-list">
+              {tocItems.map((item, idx) => (
+                <li>
+                  <a
+                    href={`#section-${idx + 1}`}
+                    style="color: inherit; text-decoration: none;"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </details>
+        )
+      }
+
+      <!-- Article Body -->
+      <div class="prose" id="article-prose">
+        <Content />
+
+        {
+          post.data.codeSnippet && (
+            <div class="code-window" id="primary-code-window">
+              <div class="code-header">
+                <span>
+                  {post.data.codeSnippet.filename} · {post.data.codeSnippet.lang}
+                </span>
+                <button
+                  type="button"
+                  class="copy-btn"
+                  data-copy-code
+                  onclick="var codeEl = this.closest('.code-window').querySelector('code'); if (codeEl && navigator.clipboard) { navigator.clipboard.writeText(codeEl.innerText); } this.textContent='✓ copied';"
+                >
+                  [copy]
+                </button>
+              </div>
+              <pre class="code-pre"><code>{post.data.codeSnippet.code.trim()}</code></pre>
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Share & Consulting Strip -->
+      <div style="margin: 28px 0; padding: 14px 0; border-top: 1px solid var(--border-line); border-bottom: 1px solid var(--border-line); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 12px;">
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <span style="color: var(--text-muted);">share:</span>
+          <a href="https://www.linkedin.com/in/indrasenpilankar" target="_blank" rel="noopener">linkedin ↗</a>
+          <a href="https://github.com/varunpilankar" target="_blank" rel="noopener">github ↗</a>
+          <a
+            href={`/posts/${post.id}`}
+            onclick="navigator.clipboard?.writeText(window.location.href); this.textContent='✓ link copied'; return false;"
+          >
+            [copy url]
+          </a>
+        </div>
+        <a href="/cv" data-page="cv" style="color: var(--accent);">need custom NAS / Linux consulting? → /cv</a>
+      </div>
+
+      <!-- Minimal Email / RSS Newsletter Box -->
+      <div class="intent-callout">
+        <div class="intent-callout-header">
+          <span>$ subscribe --dispatch</span>
+          <span>
+            0 spam · 1-click unsubscribe ·{' '}
+            <a href="/rss.xml" style="color: inherit; text-decoration: underline;">/rss.xml</a>
+          </span>
+        </div>
+        <p style="font-size: 13.5px; margin-bottom: 12px;">
+          Get new essays on Linux systems, Android internals, and startup engineering delivered to your inbox when I publish (1–2x/month).
+        </p>
+        <form
+          onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ check your email';"
+          style="display: flex; gap: 8px; flex-wrap: wrap;"
+        >
+          <input
+            type="email"
+            class="field-input"
+            placeholder="you@domain.com"
+            aria-label="Email address for newsletter subscription"
+            style="flex: 1; min-width: 200px;"
+            required
+          />
+          <button type="submit" class="btn-console primary">subscribe via email</button>
+        </form>
+      </div>
+
+      <!-- Previous / Next Post Navigation -->
+      <nav
+        aria-label="Post navigation"
+        style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-line); font-family: var(--font-mono); font-size: 12px;"
+      >
+        <div>
+          <div style="color: var(--text-muted); margin-bottom: 4px;">← previous post</div>
+          <a href={`/posts/${prevPost.id}`} data-page="article-view">{prevPost.data.title}</a>
+        </div>
+        <div style="text-align: right;">
+          <div style="color: var(--text-muted); margin-bottom: 4px;">next post →</div>
+          <a href={`/posts/${nextPost.id}`} data-page="article-view">{nextPost.data.title}</a>
+        </div>
+      </nav>
+
+      <!-- Zero/Low-Maintenance Anti-Spam Comments (Cloudflare Free Plan + Email Verification) -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2 class="section-title"># comments (2 verified)</h2>
+          <div style="display: flex; gap: 12px; font-family: var(--font-mono); font-size: 11.5px;">
+            <a href={`mailto:varun@il0g.com?subject=Re:%20${encodeURIComponent(post.data.title)}`}>
+              [reply directly via email ↗]
+            </a>
+            <a href="https://github.com/varunpilankar" target="_blank" rel="noopener">
+              [discuss on github ↗]
+            </a>
+          </div>
+        </div>
+
+        <!-- Existing Verified Comments -->
+        <div class="log-list" style="margin-bottom: 24px;">
+          <div class="log-row">
+            <div class="log-meta">
+              <div>2025-02-19</div>
+              <span style="color: var(--status-green); font-size: 10.5px;">✓ email verified</span>
+            </div>
+            <div>
+              <div style="font-weight: 600; color: var(--text-main); font-size: 13.5px; margin-bottom: 4px;">
+                Rohan Deshmukh · Systems Engineer
+              </div>
+              <p class="log-desc">
+                Setting `zfs_arc_max` to 50% RAM saved our OMV box from OOM-killing Docker containers during nightly scrubs. Are you using special allocation vdevs on NVMe?
+              </p>
+              <!-- Author Reply via Email -->
+              <div style="margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--accent); font-size: 13px;">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 2px;">
+                  indrasen (author) · replied via email
+                </div>
+                <p style="color: var(--text-body);">
+                  Yes! On 4-bay builds we mirror two enterprise M.2 drives for metadata + small blocks—makes `rsync` directory traversals 10x snappier.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simple, Zero-Maintenance Cloudflare Free Plan + Email Verification Comment Form -->
+        <form
+          class="intent-callout"
+          onsubmit="event.preventDefault(); this.querySelector('.submit-btn').textContent='✓ verification link sent to your email';"
+        >
+          <div class="intent-callout-header">
+            <span>leave a comment (cloudflare free plan + email verification)</span>
+            <span class="turnstile-badge">✓ Cloudflare Turnstile Protected</span>
+          </div>
+          <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">
+            No OAuth popups or accounts required. Enter your name &amp; email—we send a 1-click verification link to block bots/junk, and you'll receive email notifications if I reply.
+          </p>
+          <div class="form-grid form-grid-2" style="margin-bottom: 12px;">
+            <div>
+              <label class="field-label">your name *</label>
+              <input type="text" class="field-input" placeholder="e.g. Siddharth Rao" required />
+            </div>
+            <div>
+              <label class="field-label">email address (never shown publicly) *</label>
+              <input type="email" class="field-input" placeholder="you@company.com" required />
+            </div>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <label class="field-label">comment (markdown supported) *</label>
+            <textarea
+              class="field-textarea"
+              rows="3"
+              placeholder="Share a technical note, question, or feedback..."
+              required
+            ></textarea>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+              honeypot + edge rate-limit active · zero third-party trackers
+            </span>
+            <button type="submit" class="btn-console primary submit-btn">
+              verify email &amp; post comment →
+            </button>
+          </div>
+        </form>
+      </section>
+    </article>
+  </div>
+</main>
+
+<script is:inline>
+  (function () {
+    var prose = document.getElementById('article-prose');
+    if (!prose) return;
+
+    var headings = prose.querySelectorAll('h2');
+    headings.forEach(function (h, i) {
+      if (!h.id) {
+        h.id = 'section-' + (i + 1);
+      }
+    });
+
+    var codeWin = document.getElementById('primary-code-window');
+    if (codeWin && headings.length >= 2) {
+      var secondHeading = headings[1];
+      var nextParagraph = secondHeading.nextElementSibling;
+      if (nextParagraph && nextParagraph.tagName === 'P') {
+        nextParagraph.insertAdjacentElement('afterend', codeWin);
+      }
+    }
+  })();
+</script>

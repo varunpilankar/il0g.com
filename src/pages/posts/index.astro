@@ -1,0 +1,177 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const posts2025 = allPosts.filter((p) => p.data.pubDate.getFullYear() === 2025);
+const posts2024 = allPosts.filter((p) => p.data.pubDate.getFullYear() <= 2024);
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+---
+
+<BaseLayout
+  title="il0g.com:~# — /posts · Systems, Startups, Experiments & Culture"
+  currentPath="/posts"
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Page 2: Blog Posts Index Header + Pagefind Search + Topic Filter -->
+      <section class="intro-header">
+        <div class="status-line">
+          <span class="status-dot"></span>
+          <span>24 published essays · zero-js pagefind search · /rss.xml enabled</span>
+        </div>
+        <h1 class="page-title">/posts — systems, startups, experiments &amp; culture</h1>
+        <p class="page-lead">
+          Long-form notes on Linux storage, embedded/Android internals, building eHom Technologies, Python OOP, and what I'm reading, listening to, or watching.
+        </p>
+      </section>
+
+      <!-- Static Search & Category Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-input-wrap">
+          <span class="search-prefix">$ grep -i</span>
+          <input
+            type="search"
+            id="posts-search-input"
+            class="search-input"
+            placeholder="search 24 posts (e.g. zfs, magisk, python, startup, khruangbin)..."
+            aria-label="Search blog posts"
+          />
+        </div>
+        <div class="tag-row" id="posts-tag-filters">
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">filter:</span>
+          <button
+            type="button"
+            data-filter="all"
+            class="tag filter-tag"
+            style="color: var(--accent); border: 1px solid var(--accent); cursor: pointer;"
+          >
+            all (24)
+          </button>
+          <button type="button" data-filter="#tech" class="tag filter-tag" style="border: 1px solid transparent; cursor: pointer;">
+            #tech (10)
+          </button>
+          <button type="button" data-filter="#startup" class="tag filter-tag" style="border: 1px solid transparent; cursor: pointer;">
+            #startup (4)
+          </button>
+          <button type="button" data-filter="#experiments" class="tag filter-tag" style="border: 1px solid transparent; cursor: pointer;">
+            #experiments (6)
+          </button>
+          <button type="button" data-filter="#books-music-film" class="tag filter-tag" style="border: 1px solid transparent; cursor: pointer;">
+            #books-music-film (4)
+          </button>
+        </div>
+      </div>
+
+      <!-- 2025 Archive -->
+      <section class="section-block" data-year-section="2025">
+        <div class="section-head">
+          <h2 class="section-title"># 2025 ({posts2025.length} posts)</h2>
+          <span class="section-more">click any post to read →</span>
+        </div>
+        <div class="log-list">
+          {
+            posts2025.map((post) => (
+              <article
+                class="log-row post-item"
+                data-tags={post.data.tags.join(' ').toLowerCase()}
+                data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`.toLowerCase()}
+              >
+                <div class="log-meta">
+                  {formatDate(post.data.pubDate)} · {post.data.readingTime}
+                </div>
+                <div>
+                  <a href={`/posts/${post.id}`} data-page="article-view" class="log-title">
+                    {post.data.title}
+                  </a>
+                  <p class="log-desc">{post.data.description}</p>
+                  <div class="tag-row">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 2024 Archive -->
+      <section class="section-block" data-year-section="2024">
+        <div class="section-head">
+          <h2 class="section-title"># 2024 (selected)</h2>
+          <span class="section-more">archive</span>
+        </div>
+        <div class="log-list">
+          {
+            posts2024.map((post) => (
+              <article
+                class="log-row post-item"
+                data-tags={post.data.tags.join(' ').toLowerCase()}
+                data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`.toLowerCase()}
+              >
+                <div class="log-meta">
+                  {formatDate(post.data.pubDate)} · {post.data.readingTime}
+                </div>
+                <div>
+                  <a href={`/posts/${post.id}`} data-page="article-view" class="log-title">
+                    {post.data.title}
+                  </a>
+                  <p class="log-desc">{post.data.description}</p>
+                  <div class="tag-row">
+                    {post.data.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script is:inline>
+    (function () {
+      var searchInput = document.getElementById('posts-search-input');
+      var filterButtons = document.querySelectorAll('.filter-tag');
+      var postItems = document.querySelectorAll('.post-item');
+      var activeFilter = 'all';
+
+      function applyFilter() {
+        var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+        postItems.forEach(function (item) {
+          var tags = item.getAttribute('data-tags') || '';
+          var search = item.getAttribute('data-search') || '';
+          var matchesTag = activeFilter === 'all' || tags.indexOf(activeFilter) !== -1;
+          var matchesSearch = !query || search.indexOf(query) !== -1;
+          item.style.display = matchesTag && matchesSearch ? '' : 'none';
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilter);
+      }
+
+      filterButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeFilter = btn.getAttribute('data-filter') || 'all';
+          filterButtons.forEach(function (b) {
+            var isSelected = b === btn;
+            b.style.color = isSelected ? 'var(--accent)' : '';
+            b.style.borderColor = isSelected ? 'var(--accent)' : 'transparent';
+          });
+          applyFilter();
+        });
+      });
+    })();
+  </script>
+</BaseLayout>

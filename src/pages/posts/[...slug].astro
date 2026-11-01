@@ -1,0 +1,216 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+
+  return posts.map((post, idx) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      prevPost: posts[idx + 1] ?? posts[0],
+      nextPost: posts[idx - 1] ?? posts[posts.length - 1],
+    },
+  }));
+}
+
+const { post, prevPost, nextPost } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+---
+
+<BaseLayout
+  title={`${post.data.title} — il0g.com:~#`}
+  description={post.data.description}
+  currentPath={`/posts/${post.id}`}
+>
+  <main class="page-main">
+    <div class="container">
+      <!-- Back Link -->
+      <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/posts" data-page="posts" class="nav-link">← cd /posts</a>
+        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+          reading time: {post.data.readingTime} · {post.data.wordCount || '1,420 words'}
+        </span>
+      </div>
+
+      <!-- Article Header -->
+      <article>
+        <header class="intro-header">
+          <div class="status-line">
+            <span>{formatDate(post.data.pubDate)}</span>
+            <span>·</span>
+            <span>by indrasen (varun) pilankar</span>
+            <span>·</span>
+            {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+          </div>
+          <h1 class="page-title">{post.data.title}</h1>
+          <p class="page-lead">{post.data.description}</p>
+        </header>
+
+        <!-- Collapsible Console Table of Contents -->
+        {
+          post.data.toc && post.data.toc.length > 0 && (
+            <details class="toc-console" open>
+              <summary>≡ table of contents ({post.data.toc.length} sections)</summary>
+              <ol class="toc-list">
+                {post.data.toc.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ol>
+            </details>
+          )
+        }
+
+        <!-- Article Body -->
+        <div class="prose">
+          <Content />
+
+          {
+            post.data.codeSnippet && (
+              <div class="code-window">
+                <div class="code-header">
+                  <span>
+                    {post.data.codeSnippet.filename} · {post.data.codeSnippet.lang}
+                  </span>
+                  <button
+                    type="button"
+                    class="copy-btn"
+                    onclick="navigator.clipboard?.writeText(this.closest('.code-window').querySelector('code').innerText); this.textContent='✓ copied';"
+                  >
+                    [copy]
+                  </button>
+                </div>
+                <pre class="code-pre"><code>{post.data.codeSnippet.code.trim()}</code></pre>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Share & Consulting Strip -->
+        <div style="margin: 28px 0; padding: 14px 0; border-top: 1px solid var(--border-line); border-bottom: 1px solid var(--border-line); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 12px;">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <span style="color: var(--text-muted);">share:</span>
+            <a href="https://www.linkedin.com/in/indrasenpilankar" target="_blank" rel="noopener">linkedin ↗</a>
+            <a href="https://github.com/varunpilankar" target="_blank" rel="noopener">github ↗</a>
+            <a
+              href={`/posts/${post.id}`}
+              onclick="navigator.clipboard?.writeText(window.location.href); this.textContent='✓ link copied'; return false;"
+            >
+              [copy url]
+            </a>
+          </div>
+          <a href="/cv" data-page="cv" style="color: var(--accent);">need custom NAS / Linux consulting? → /cv</a>
+        </div>
+
+        <!-- Minimal Email / RSS Newsletter Box -->
+        <div class="intent-callout">
+          <div class="intent-callout-header">
+            <span>$ subscribe --dispatch</span>
+            <span>0 spam · 1-click unsubscribe · /rss.xml</span>
+          </div>
+          <p style="font-size: 13.5px; margin-bottom: 12px;">
+            Get new essays on Linux systems, Android internals, and startup engineering delivered to your inbox when I publish (1–2x/month).
+          </p>
+          <form
+            onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ check your email';"
+            style="display: flex; gap: 8px; flex-wrap: wrap;"
+          >
+            <input
+              type="email"
+              class="field-input"
+              placeholder="you@domain.com"
+              style="flex: 1; min-width: 200px;"
+              required
+            />
+            <button type="submit" class="btn-console primary">subscribe via email</button>
+          </form>
+        </div>
+
+        <!-- Previous / Next Post Navigation -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-line); font-family: var(--font-mono); font-size: 12px;">
+          <div>
+            <div style="color: var(--text-muted); margin-bottom: 4px;">← previous post</div>
+            <a href={`/posts/${prevPost.id}`} data-page="article-view">{prevPost.data.title}</a>
+          </div>
+          <div style="text-align: right;">
+            <div style="color: var(--text-muted); margin-bottom: 4px;">next post →</div>
+            <a href={`/posts/${nextPost.id}`} data-page="article-view">{nextPost.data.title}</a>
+          </div>
+        </div>
+
+        <!-- Zero/Low-Maintenance Anti-Spam Comments (Cloudflare Free Plan + Email Verification) -->
+        <section class="section-block">
+          <div class="section-head">
+            <h2 class="section-title"># comments (2 verified)</h2>
+            <div style="display: flex; gap: 12px; font-family: var(--font-mono); font-size: 11.5px;">
+              <a href={`mailto:varun@il0g.com?subject=Re:%20${encodeURIComponent(post.data.title)}`}>[reply directly via email ↗]</a>
+              <a href="https://github.com/varunpilankar" target="_blank" rel="noopener">[discuss on github ↗]</a>
+            </div>
+          </div>
+
+          <!-- Existing Verified Comments -->
+          <div class="log-list" style="margin-bottom: 24px;">
+            <div class="log-row">
+              <div class="log-meta">
+                <div>2025-02-19</div>
+                <span style="color: var(--status-green); font-size: 10.5px;">✓ email verified</span>
+              </div>
+              <div>
+                <div style="font-weight: 600; color: var(--text-main); font-size: 13.5px; margin-bottom: 4px;">Rohan Deshmukh · Systems Engineer</div>
+                <p class="log-desc">Setting `zfs_arc_max` to 50% RAM saved our OMV box from OOM-killing Docker containers during nightly scrubs. Are you using special allocation vdevs on NVMe?</p>
+                <div style="margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--accent); font-size: 13px;">
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 2px;">indrasen (author) · replied via email</div>
+                  <p style="color: var(--text-body);">Yes! On 4-bay builds we mirror two enterprise M.2 drives for metadata + small blocks—makes `rsync` directory traversals 10x snappier.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simple, Zero-Maintenance Cloudflare Free Plan + Email Verification Comment Form -->
+          <form
+            class="intent-callout"
+            onsubmit="event.preventDefault(); this.querySelector('.submit-btn').textContent='✓ verification link sent to your email';"
+          >
+            <div class="intent-callout-header">
+              <span>leave a comment (cloudflare free plan + email verification)</span>
+              <span class="turnstile-badge">✓ Cloudflare Turnstile Protected</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px;">
+              No OAuth popups or accounts required. Enter your name &amp; email—we send a 1-click verification link to block bots/junk, and you'll receive email notifications if I reply.
+            </p>
+            <div class="form-grid form-grid-2" style="margin-bottom: 12px;">
+              <div>
+                <label class="field-label">your name *</label>
+                <input type="text" class="field-input" placeholder="e.g. Siddharth Rao" required />
+              </div>
+              <div>
+                <label class="field-label">email address (never shown publicly) *</label>
+                <input type="email" class="field-input" placeholder="you@company.com" required />
+              </div>
+            </div>
+            <div style="margin-bottom: 12px;">
+              <label class="field-label">comment (markdown supported) *</label>
+              <textarea
+                class="field-textarea"
+                rows="3"
+                placeholder="Share a technical note, question, or feedback..."
+                required
+              ></textarea>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">honeypot + edge rate-limit active · zero third-party trackers</span>
+              <button type="submit" class="btn-console primary submit-btn">verify email &amp; post comment →</button>
+            </div>
+          </form>
+        </section>
+      </article>
+    </div>
+  </main>
+</BaseLayout>

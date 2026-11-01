@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ehom-nas-stack",
+    "order": 1,
+    "meta": "eHom Tech · NAS",
+    "title": "eHom Private Cloud & OMV NAS Server Stack",
+    "href": "/projects",
+    "desc": "Centralized RAID/ZFS storage, automated Borg backups, and Plex/Jellyfin media engine deployed for SMBs and home labs.",
+    "section": "home-selected",
+    "tags": ["linux", "openmediavault", "zfs", "wireguard"],
+    "featuredOnHome": true
+  },
+  {
+    "id": "bitperfect-dac-hungrygms",
+    "order": 2,
+    "meta": "C / Shell · ★ 140+",
+    "title": "BitPerfect-DAC & magisk-module-hungryGMS",
+    "href": "/projects",
+    "desc": "Open-source Android system modules for lossless USB audio routing and taming Google Play Services wakelock battery drain.",
+    "section": "home-selected",
+    "tags": ["android-audio", "magisk", "usb-dac", "kernel-tuning"],
+    "featuredOnHome": true
+  }
+]

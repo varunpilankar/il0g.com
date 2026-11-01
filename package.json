@@ -1,0 +1,23 @@
+{
+  "name": "il0g-com",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "description": "il0g.com — Indrasen (Varun) Pilankar's Console Log (Astro 5.x)",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0 --port 4321",
+    "start": "astro dev --host 0.0.0.0 --port 4321",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0 --port 4321",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.3.0",
+    "astro": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.7.3"
+  }
+}

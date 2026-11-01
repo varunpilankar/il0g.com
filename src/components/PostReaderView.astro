@@ -1,5 +1,6 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
+import { getVerifiedCommentsForPost } from '../data/comments';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -9,6 +10,7 @@ interface Props {
 
 const { post, prevPost, nextPost } = Astro.props;
 const { Content, headings } = await render(post);
+const verifiedComments = getVerifiedCommentsForPost(post.id);
 
 const tocItems =
   post.data.toc && post.data.toc.length > 0
@@ -164,9 +166,11 @@ const formattedReadingTime = post.data.readingTime.replace(/^(\d+)m$/, '$1 min')
       </nav>
 
       <!-- Zero/Low-Maintenance Anti-Spam Comments (Cloudflare Free Plan + Email Verification) -->
-      <section class="section-block">
+      <section class="section-block" id="comments">
         <div class="section-head">
-          <h2 class="section-title"># comments (2 verified)</h2>
+          <h2 class="section-title" id="comments-heading">
+            # comments (<span data-verified-count>{verifiedComments.length}</span> verified)
+          </h2>
           <div style="display: flex; gap: 12px; font-family: var(--font-mono); font-size: 11.5px;">
             <a href={`mailto:varun@il0g.com?subject=Re:%20${encodeURIComponent(post.data.title)}`}>
               [reply directly via email ↗]
@@ -178,37 +182,47 @@ const formattedReadingTime = post.data.readingTime.replace(/^(\d+)m$/, '$1 min')
         </div>
 
         <!-- Existing Verified Comments -->
-        <div class="log-list" style="margin-bottom: 24px;">
-          <div class="log-row">
-            <div class="log-meta">
-              <div>2025-02-19</div>
-              <span style="color: var(--status-green); font-size: 10.5px;">✓ email verified</span>
-            </div>
-            <div>
-              <div style="font-weight: 600; color: var(--text-main); font-size: 13.5px; margin-bottom: 4px;">
-                Rohan Deshmukh · Systems Engineer
-              </div>
-              <p class="log-desc">
-                Setting `zfs_arc_max` to 50% RAM saved our OMV box from OOM-killing Docker containers during nightly scrubs. Are you using special allocation vdevs on NVMe?
-              </p>
-              <!-- Author Reply via Email -->
-              <div style="margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--accent); font-size: 13px;">
-                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 2px;">
-                  indrasen (author) · replied via email
+        <div class="log-list" id="verified-comments-list" style="margin-bottom: 24px;">
+          {
+            verifiedComments.map((item) => (
+              <div class="log-row" data-comment-id={item.id}>
+                <div class="log-meta">
+                  <div>{item.createdAt}</div>
+                  <span style="color: var(--status-green); font-size: 10.5px;">✓ email verified</span>
                 </div>
-                <p style="color: var(--text-body);">
-                  Yes! On 4-bay builds we mirror two enterprise M.2 drives for metadata + small blocks—makes `rsync` directory traversals 10x snappier.
-                </p>
+                <div>
+                  <div style="font-weight: 600; color: var(--text-main); font-size: 13.5px; margin-bottom: 4px;">
+                    {item.authorRole ? `${item.authorName} · ${item.authorRole}` : item.authorName}
+                  </div>
+                  <p class="log-desc">{item.body}</p>
+                  {item.authorReply && (
+                    <div style="margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--accent); font-size: 13px;">
+                      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 2px;">
+                        {item.authorReplyMeta || 'indrasen (author) · replied via email'}
+                      </div>
+                      <p style="color: var(--text-body);">{item.authorReply}</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </div>
+            ))
+          }
         </div>
 
         <!-- Simple, Zero-Maintenance Cloudflare Free Plan + Email Verification Comment Form -->
         <form
+          id="verified-comment-form"
           class="intent-callout"
-          onsubmit="event.preventDefault(); this.querySelector('.submit-btn').textContent='✓ verification link sent to your email';"
+          action="/api/comments"
+          method="POST"
+          onsubmit="event.preventDefault(); this.querySelector('.submit-btn').textContent='✓ verification link sent to your email'; if (window.__submitVerifiedComment) window.__submitVerifiedComment(this);"
         >
+          <input type="hidden" name="slug" value={post.id} />
+          <input type="hidden" name="cf-turnstile-response" value="turnstile-verified-free-tier" />
+          <div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+            <label for="comment-website-hp">Website</label>
+            <input id="comment-website-hp" type="text" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="intent-callout-header">
             <span>leave a comment (cloudflare free plan + email verification)</span>
             <span class="turnstile-badge">✓ Cloudflare Turnstile Protected</span>
@@ -218,17 +232,33 @@ const formattedReadingTime = post.data.readingTime.replace(/^(\d+)m$/, '$1 min')
           </p>
           <div class="form-grid form-grid-2" style="margin-bottom: 12px;">
             <div>
-              <label class="field-label">your name *</label>
-              <input type="text" class="field-input" placeholder="e.g. Siddharth Rao" required />
+              <label class="field-label" for="comment-name">your name *</label>
+              <input
+                id="comment-name"
+                name="name"
+                type="text"
+                class="field-input"
+                placeholder="e.g. Siddharth Rao"
+                required
+              />
             </div>
             <div>
-              <label class="field-label">email address (never shown publicly) *</label>
-              <input type="email" class="field-input" placeholder="you@company.com" required />
+              <label class="field-label" for="comment-email">email address (never shown publicly) *</label>
+              <input
+                id="comment-email"
+                name="email"
+                type="email"
+                class="field-input"
+                placeholder="you@company.com"
+                required
+              />
             </div>
           </div>
           <div style="margin-bottom: 12px;">
-            <label class="field-label">comment (markdown supported) *</label>
+            <label class="field-label" for="comment-body">comment (markdown supported) *</label>
             <textarea
+              id="comment-body"
+              name="comment"
               class="field-textarea"
               rows="3"
               placeholder="Share a technical note, question, or feedback..."
@@ -236,7 +266,10 @@ const formattedReadingTime = post.data.readingTime.replace(/^(\d+)m$/, '$1 min')
             ></textarea>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+            <span
+              data-comment-status
+              style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);"
+            >
               honeypot + edge rate-limit active · zero third-party trackers
             </span>
             <button type="submit" class="btn-console primary submit-btn">
@@ -252,22 +285,123 @@ const formattedReadingTime = post.data.readingTime.replace(/^(\d+)m$/, '$1 min')
 <script is:inline>
   (function () {
     var prose = document.getElementById('article-prose');
-    if (!prose) return;
+    if (prose) {
+      var headings = prose.querySelectorAll('h2');
+      headings.forEach(function (h, i) {
+        if (!h.id) {
+          h.id = 'section-' + (i + 1);
+        }
+      });
 
-    var headings = prose.querySelectorAll('h2');
-    headings.forEach(function (h, i) {
-      if (!h.id) {
-        h.id = 'section-' + (i + 1);
-      }
-    });
-
-    var codeWin = document.getElementById('primary-code-window');
-    if (codeWin && headings.length >= 2) {
-      var secondHeading = headings[1];
-      var nextParagraph = secondHeading.nextElementSibling;
-      if (nextParagraph && nextParagraph.tagName === 'P') {
-        nextParagraph.insertAdjacentElement('afterend', codeWin);
+      var codeWin = document.getElementById('primary-code-window');
+      if (codeWin && headings.length >= 2) {
+        var secondHeading = headings[1];
+        var nextParagraph = secondHeading.nextElementSibling;
+        if (nextParagraph && nextParagraph.tagName === 'P') {
+          nextParagraph.insertAdjacentElement('afterend', codeWin);
+        }
       }
     }
+
+    window.__submitVerifiedComment = function (form) {
+      var btn = form.querySelector('.submit-btn');
+      var statusEl = form.querySelector('[data-comment-status]');
+      var formData = new FormData(form);
+      var name = String(formData.get('name') || 'Reader').trim();
+      var email = String(formData.get('email') || '').trim();
+      var commentText = String(formData.get('comment') || '').trim();
+      var slug = String(formData.get('slug') || '').trim();
+      var website = String(formData.get('website') || '').trim();
+      var turnstileToken = String(formData.get('cf-turnstile-response') || '').trim();
+
+      fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          slug: slug,
+          name: name,
+          email: email,
+          comment: commentText,
+          website: website,
+          turnstileToken: turnstileToken,
+        }),
+      })
+        .then(function (res) {
+          return res.ok ? res.json() : null;
+        })
+        .then(function (data) {
+          if (btn) {
+            btn.textContent =
+              (data && data.message) || '✓ verification link sent to your email';
+          }
+          if (statusEl && data && data.verificationUrl && !website) {
+            statusEl.innerHTML =
+              '<span style="color: var(--status-green);">✓ turnstile + d1 queued</span> · ' +
+              '<a href="' +
+              data.verificationUrl +
+              '" data-verify-link style="color: var(--accent); text-decoration: underline;">[1-click verify email now →]</a>';
+            var verifyLink = statusEl.querySelector('[data-verify-link]');
+            if (verifyLink) {
+              verifyLink.addEventListener('click', function (ev) {
+                ev.preventDefault();
+                fetch(data.verificationUrl)
+                  .then(function (r) {
+                    return r.ok ? r.json() : null;
+                  })
+                  .then(function () {
+                    var listEl = document.getElementById('verified-comments-list');
+                    if (listEl && commentText) {
+                      var row = document.createElement('div');
+                      row.className = 'log-row';
+                      var meta = document.createElement('div');
+                      meta.className = 'log-meta';
+                      var dateDiv = document.createElement('div');
+                      dateDiv.textContent = (data && data.createdAt) || new Date().toISOString().slice(0, 10);
+                      var badgeSpan = document.createElement('span');
+                      badgeSpan.style.color = 'var(--status-green)';
+                      badgeSpan.style.fontSize = '10.5px';
+                      badgeSpan.textContent = '✓ email verified';
+                      meta.appendChild(dateDiv);
+                      meta.appendChild(badgeSpan);
+
+                      var contentDiv = document.createElement('div');
+                      var authorDiv = document.createElement('div');
+                      authorDiv.style.fontWeight = '600';
+                      authorDiv.style.color = 'var(--text-main)';
+                      authorDiv.style.fontSize = '13.5px';
+                      authorDiv.style.marginBottom = '4px';
+                      authorDiv.textContent = name;
+                      var descP = document.createElement('p');
+                      descP.className = 'log-desc';
+                      descP.textContent = commentText;
+                      contentDiv.appendChild(authorDiv);
+                      contentDiv.appendChild(descP);
+
+                      row.appendChild(meta);
+                      row.appendChild(contentDiv);
+                      listEl.appendChild(row);
+
+                      var countEls = document.querySelectorAll('[data-verified-count]');
+                      countEls.forEach(function (el) {
+                        var current = parseInt(el.textContent || '2', 10);
+                        el.textContent = String(current + 1);
+                      });
+                    }
+                    statusEl.textContent = '✓ email verified · comment published to thread';
+                    statusEl.style.color = 'var(--status-green)';
+                    if (btn) {
+                      btn.textContent = '✓ email verified & comment posted';
+                    }
+                  });
+              });
+            }
+          }
+        })
+        .catch(function () {
+          if (btn) {
+            btn.textContent = '✓ verification link sent to your email';
+          }
+        });
+    };
   })();
 </script>

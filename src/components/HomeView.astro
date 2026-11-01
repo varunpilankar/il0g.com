@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import { HOME_SELECTED_PROJECTS, HOME_PHOTOS } from '../data/site';
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const latestPosts = allPosts.filter((p) => p.data.featuredOnHome).slice(0, 3);
+const postsToShow = latestPosts.length > 0 ? latestPosts : allPosts.slice(0, 3);
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+---
+
+<main class="page-main">
+  <div class="container">
+    <!-- Authentic Minimal Console Intro for Indrasen (Varun) Pilankar -->
+    <section class="intro-header">
+      <div class="status-line">
+        <span class="status-dot"></span>
+        <span>indrasen (varun) pilankar · "il0g" = indrasen's log · mumbai / remote</span>
+      </div>
+      <h1 class="page-title">me in variable expression</h1>
+      <p class="page-lead">
+        Co-Founder &amp; Systems Architect at <strong>eHom Technologies</strong> (private Linux/ZFS NAS storage &amp; media servers), Published Python Author (<strong>Packt</strong>), CS Instructor (8+ yrs), and open-source Android kernel/audio tinkerer (<a href="https://github.com/varunpilankar" target="_blank" rel="noopener">@varunpilankar</a>). Writing about systems, startups, experiments, books, music, and cinema.
+      </p>
+      <div class="action-row">
+        <a href="/posts" data-page="posts" class="btn-console primary">cd /posts (24)</a>
+        <a href="/cv" data-page="cv" class="btn-console">view /cv &amp; book 15-min intro →</a>
+        <a href="/viewports" data-page="responsive-preview" class="btn-console">📱 view mobile &amp; tablet UI</a>
+      </div>
+    </section>
+
+    <!-- Latest Blog Posts Stream -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># latest /posts</h2>
+        <a href="/posts" data-page="posts" class="section-more">all 24 essays →</a>
+      </div>
+      <div class="log-list">
+        {
+          postsToShow.map((post) => (
+            <article class="log-row">
+              <div class="log-meta">
+                {formatDate(post.data.pubDate)} · {post.data.readingTime}
+              </div>
+              <div>
+                <a href={`/posts/${post.id}`} data-page="article-view" class="log-title">
+                  {post.data.title}
+                </a>
+                <p class="log-desc">{post.data.description}</p>
+                <div class="tag-row">
+                  {post.data.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Selected Projects & Hardware Builds (De-boxed clean log rows) -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># selected /projects</h2>
+        <a href="/projects" data-page="projects" class="section-more">all /projects →</a>
+      </div>
+      <div class="log-list">
+        {
+          HOME_SELECTED_PROJECTS.map((project) => (
+            <div class="log-row">
+              <div class="log-meta">{project.meta}</div>
+              <div>
+                <a href={project.href} data-page="projects" class="log-title">
+                  {project.title}
+                </a>
+                <p class="log-desc">{project.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Recent Photos & Auto-Synced Shelf Strip -->
+    <section class="section-block">
+      <div class="section-head">
+        <h2 class="section-title"># live /shelf &amp; 35mm photos</h2>
+        <a href="/shelf" data-page="shelf" class="section-more">explore /shelf →</a>
+      </div>
+      <div class="photo-grid">
+        {
+          HOME_PHOTOS.map((photo) => (
+            <div class="photo-item">
+              <img src={photo.src} alt={photo.alt} loading="lazy" />
+              <div class="photo-caption">
+                <span>{photo.filename}</span>
+                <span>{photo.tag}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</main>

@@ -1,0 +1,187 @@
+---
+import { PRIMARY_ROUTES, VIEWPORT_ROUTE, ALL_NAV_ROUTES, type NavRoute } from '../data/site';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+function normalizePath(path: string): string {
+  if (!path || path === '/') return '/';
+  return path.replace(/\/+$/, '');
+}
+
+const activePath = normalizePath(currentPath);
+
+function isRouteActive(route: NavRoute): boolean {
+  if (route.pageId === 'home') {
+    return activePath === '/' || activePath === '/home';
+  }
+  if (route.pageId === 'responsive-preview') {
+    return activePath === '/viewports' || activePath === '/responsive-preview';
+  }
+  if (route.pageId === 'posts') {
+    return activePath === '/posts' || activePath.startsWith('/posts/');
+  }
+  return activePath === route.href || activePath.startsWith(`${route.href}/`);
+}
+---
+
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a href="/" data-page="home" class="brand-prompt" aria-label="il0g.com Home — Indrasen's Log">
+      <span class="prompt-user">il0g.com</span><span class="prompt-path">:~#</span><span class="prompt-cursor" aria-hidden="true"></span>
+    </a>
+
+    <!-- Desktop Horizontal Console Menu (>= 860px) -->
+    <nav class="site-nav desktop-nav" aria-label="Primary Navigation">
+      {
+        PRIMARY_ROUTES.map((route) => {
+          const active = isRouteActive(route);
+          return (
+            <a
+              href={route.href}
+              data-page={route.pageId}
+              class:list={['nav-link', { active }]}
+              aria-current={active ? 'page' : undefined}
+            >
+              {route.cmd}
+            </a>
+          );
+        })
+      }
+      <a
+        href={VIEWPORT_ROUTE.href}
+        data-page={VIEWPORT_ROUTE.pageId}
+        class:list={['nav-link', 'nav-badge-link', { active: isRouteActive(VIEWPORT_ROUTE) }]}
+        aria-current={isRouteActive(VIEWPORT_ROUTE) ? 'page' : undefined}
+        title="Inspect Mobile & Tablet Vertical Menu UI"
+      >
+        {VIEWPORT_ROUTE.cmd}
+      </a>
+    </nav>
+
+    <div class="header-actions">
+      <button
+        type="button"
+        id="theme-toggle-btn"
+        class="theme-toggle"
+        aria-label="Toggle Light and Dark Mode"
+      >
+        <span class="theme-dot" aria-hidden="true"></span>
+        <span class="theme-label">theme</span>
+      </button>
+
+      <!-- Mobile & Tablet Vertical Menu Trigger (< 860px) -->
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="mobile-menu-btn"
+        aria-expanded="false"
+        aria-controls="vertical-nav-drawer"
+      >
+        <span class="menu-btn-text">≡ menu</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Collapsible Vertical Terminal Menu Bar for Mobile & Tablet -->
+  <nav
+    id="vertical-nav-drawer"
+    class="vertical-nav-drawer"
+    aria-label="Mobile and Tablet Vertical Navigation"
+  >
+    <div class="container vertical-nav-inner">
+      <div class="vertical-nav-header">
+        <span>$ ls -la /navigation (6 routes)</span>
+        <span>tap to navigate</span>
+      </div>
+      <ul class="vertical-nav-list">
+        {
+          ALL_NAV_ROUTES.map((route) => {
+            const active = isRouteActive(route);
+            return (
+              <li>
+                <a
+                  href={route.href}
+                  data-page={route.pageId}
+                  class:list={['vertical-nav-item', { active }]}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  <span class="v-idx">{route.idx}</span>
+                  <span class="v-cmd">{route.cmd}</span>
+                  <span class="v-desc">{route.desc}</span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var themeBtn = document.getElementById('theme-toggle-btn');
+    var menuBtn = document.getElementById('mobile-menu-btn');
+    var drawer = document.getElementById('vertical-nav-drawer');
+
+    function syncThemeLabel(theme) {
+      if (!themeBtn) return;
+      var lbl = themeBtn.querySelector('.theme-label');
+      if (lbl) {
+        lbl.textContent = 'theme: ' + theme;
+      }
+      themeBtn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+
+    var currentTheme = root.getAttribute('data-theme') || 'light';
+    syncThemeLabel(currentTheme);
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var isDark = root.getAttribute('data-theme') === 'dark';
+        var nextTheme = isDark ? 'light' : 'dark';
+        root.setAttribute('data-theme', nextTheme);
+        try {
+          localStorage.setItem('il0g-theme', nextTheme);
+          localStorage.setItem('theme', nextTheme);
+        } catch (e) {}
+        syncThemeLabel(nextTheme);
+      });
+    }
+
+    function setDrawerState(open) {
+      if (!drawer || !menuBtn) return;
+      drawer.classList.toggle('is-open', open);
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var txt = menuBtn.querySelector('.menu-btn-text');
+      if (txt) {
+        txt.textContent = open ? '✕ close' : '≡ menu';
+      }
+    }
+
+    if (menuBtn && drawer) {
+      menuBtn.addEventListener('click', function () {
+        var isOpen = drawer.classList.contains('is-open');
+        setDrawerState(!isOpen);
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+          setDrawerState(false);
+          menuBtn.focus();
+        }
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 860 && drawer.classList.contains('is-open')) {
+          setDrawerState(false);
+        }
+      });
+    }
+  })();
+</script>
